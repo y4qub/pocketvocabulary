@@ -1,1 +1,55 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="nav" side="left" (ionClose)="editMode = false">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title class="menuTitle">{{ 'languages' | translate }}</ion-title>
+            <ion-buttons start>
+                <button ion-button icon-only (click)="addList()">
+                    <ion-icon name="add" color="dark"></ion-icon>
+                </button>
+            </ion-buttons>
+            <ion-buttons end>
+                <button showWhen="ios" ion-button (click)="switchEditMode()" *ngIf="!editMode && languages">
+                    <span ion-text color="dark">{{ 'edit' | translate }}</span>
+                </button>
+                <button showWhen="android" icon-only ion-button (click)="switchEditMode()" *ngIf="!editMode && languages">
+                    <ion-icon name="create" color="dark"></ion-icon>
+                </button>
+                <button ion-button (click)="switchEditMode()" *ngIf="editMode">
+                    <span ion-text color="dark">
+                        <b>{{ 'done' | translate }}</b>
+                    </span>
+                </button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content no-bounce>
+        <div class="spinner" *ngIf="!languages">
+            <ion-spinner name="crescent" showWhen="android"></ion-spinner>
+            <ion-spinner name="ios" showWhen="ios"></ion-spinner>
+        </div>
+        <form [formGroup]="myForm">
+            <!-- iOS List -->
+            <ion-list radio-group *ngIf="languages" formControlName="listOptions" showWhen="ios" [(ngModel)]="selectedLanguage">
+                <ion-item *ngFor="let language of languages" (click)="deleteLanguage(language)">
+                    <ion-label>
+                        <ion-icon name="remove-circle" class="remove-ios" *ngIf="editMode"></ion-icon>
+                        <span>{{language}}</span>
+                    </ion-label>
+                    <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language"></ion-radio>
+                </ion-item>
+            </ion-list>
+            <!-- Android List -->
+            <ion-list radio-group *ngIf="languages" formControlName="listOptions" showWhen="android" [(ngModel)]="selectedLanguage" no-lines>
+                <ion-item *ngFor="let language of languages" (click)="deleteLanguage(language)">
+                    <ion-label>
+                        <span>{{language}}</span>
+                        <ion-icon name="trash" class="remove-android" *ngIf="editMode"></ion-icon>
+                    </ion-label>
+                    <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </form>
+    </ion-content>
+</ion-menu>
+<ion-nav #nav></ion-nav>

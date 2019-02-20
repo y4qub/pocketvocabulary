@@ -1,0 +1,6 @@
+<div class="progress-outer">
+  <div class="progress-inner" [style.width]="rating + '%'" [style.background-color]="rateColor">
+    <span *ngIf="rating">{{score}} / {{attempts}} ({{rating}}%)</span>
+    <span *ngIf="!rating">0 %</span>
+  </div>
+</div>

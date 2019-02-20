@@ -34,12 +34,14 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  primary:      #FF9500,
+  secondary:    #32db64,
+  danger:       #f53d3d,
+  gray:        #c5c5c5,
+  dark:         #222,
 );
+//ios #FF9600
+//android #FF9800
 
 
 // App iOS Variables
@@ -70,8 +72,9 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
 
+//@import "ionic.theme.default";
+@import "ionic.theme.dark";
 
 // Ionicons
 // --------------------------------------------------
@@ -86,3 +89,38 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+$menu-width: 250px;
+$tabs-md-tab-opacity: 1.0;
+$tabs-md-tab-icon-color: #7E7F7E;
+$tabs-background: #181818;
+$toolbar-background: #181818;
+$background-color: #0D0D0D !important;
+$content-ios-outer-background: #0D0D0D;
+$refresher-icon-color: #f4f4f4;
+$refresher-text-color: #f4f4f4;
+$refresher-border-color: #191919;
+$spinner-ios-circles-color: #f4f4f4;
+$spinner-md-crescent-color: #f4f4f4;
+$toggle-ios-background-color-off: color($colors, 'dark');
+$toggle-ios-border-color-off: gray;
+$toggle-ios-background-color-on: color($colors, 'secondary');
+$toggle-ios-handle-background-color: white;
+$toggle-md-handle-background-color-off: #B9B9B9;
+$toggle-md-track-background-color-off: #6F6F6F;
+$list-ios-margin-bottom: 0;
+$list-md-margin-bottom: 0;
+$note-md-color: color($colors, gray);
+$note-ios-color: color($colors, gray);
+$alert-md-input-text-color:white;
+$alert-md-background-color: #444444;
+$alert-md-message-text-color: white;
+$alert-ios-input-background-color: rgb(29, 29, 29);
+$alert-ios-background: color($colors, 'dark');
+$alert-ios-button-background-color-activated: rgb(29, 29, 29);
+$alert-md-radio-label-text-color: white;
+$alert-ios-radio-label-text-color: white;
+$alert-ios-button-border-color: rgb(85, 85, 85);
+$label-ios-text-color: white;
+$label-md-text-color: white;
+$alert-md-background-color: rgb(40, 40, 40);

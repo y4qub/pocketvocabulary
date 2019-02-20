@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,80 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.menuTitle {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+ion-spinner {
+    width: 45px;
+}
+
+.spinner {
+    text-align: center;
+    height: 50%;
+}
+
+.remove-ios {
+    color: red;
+    font-size: 21px;
+    float: left;
+    margin-right: 1em;
+}
+
+.remove-android {
+    color: gray;
+    font-size: 19px;
+    float: right;
+}
+
+h4.note {
+    color: color($colors, gray);
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    position: absolute;
+}
+
+.ios-delete-btn {
+    color: #f53d3d !important;
+    font-weight: bold;
+}
+
+ion-content {
+    text-align: center;
+}
+
+// Dark Theme
+.alertDark {
+    color: white;
+    .alert-checkbox-label {
+        color: white !important;
+    }
+    .alert-checkbox-icon {
+        border-color: white !important;
+    }
+}
+
+.item-ios,
+.item-md {
+    background-color: rgb(21, 21, 21);
+}
+
+// Web
+.innercontent-padding ion-card-header .item {
+    padding: 4px 30px !important;
+  }
+
+  .innercontent-padding ion-card-header,
+  .innercontent-padding ion-card-content,
+  .innercontent-padding ion-card-content .list ion-item-content, {
+    padding: 0 !important;
+  }
+
+  @media (min-width: 600px) {
+    .innercontent-padding {
+      width: 60% !important;
+      margin: 23px auto !important;
+    }
+  }

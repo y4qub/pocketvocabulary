@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'lets_get_started' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding no-bounce>
+  <div class="text" id="title">
+    <span *ngIf="!existingAccount">{{ 'create_a_new_account' | translate }}</span>
+    <span *ngIf="existingAccount">{{ 'login_to_your_account' | translate }}</span>
+  </div>
+  <ion-card>
+    <ion-item class="item">
+      <ion-label stacked>Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>{{ 'password' | translate }}</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+  </ion-card>
+  <div class="acceptance" *ngIf="!existingAccount">
+    <input type="checkbox" class="checkbox" [(ngModel)]="accepted">
+    <p>I have read and accepted the<br> <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a></p>
+  </div>
+  <button ion-button full class="fullBtn" *ngIf="existingAccount" (click)="signIn(email, password)">{{ 'sign_in' | translate
+    }}
+  </button>
+  <button ion-button full class="fullBtn" *ngIf="!existingAccount" (click)="signUp(email, password)">{{ 'sign_up' | translate
+    }}
+  </button>
+  <div class="textBtn" *ngIf="!existingAccount" (click)="existingAccount = true">{{ 'i_already_have_an_account' | translate
+    }}
+  </div>
+  <div class="textBtn" *ngIf="existingAccount" (click)="existingAccount = false">{{ 'i_dont_have_an_account_yet' | translate
+    }}
+  </div>
+  <div class="textBtn" (click)="forgotPassword()">{{ 'forgot_password' | translate }}</div>
+  <div class="signInWith">
+    <span class="text" id="background">{{ 'or_sign_in_with' | translate }}</span>
+  </div>
+  <div class="signInIcons">
+    <img src="./assets/imgs/fb.png" class="signInIcon" style="margin-right: 1em;" (click)="signInWithFacebook()" tappable>
+    <img src="./assets/imgs/g.png" class="signInIcon" (click)="signInWithGoogle()" tappable>
+  </div>
+</ion-content>

@@ -1,30 +1,85 @@
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { AngularFireModule } from 'angularfire2'
+import { HttpModule } from '@angular/http';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { LanguageProvider } from '../providers/language/language';
+import { ScreenOrientation } from '@ionic-native/screen-orientation'
+import { IonicStorageModule } from '@ionic/storage';
+import { Globalization } from '@ionic-native/globalization'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { DateProvider } from '../providers/date/date';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { StreakProvider } from '../providers/streak/streak';
+import { Clipboard } from '@ionic-native/clipboard'
+import { FileTransfer } from '@ionic-native/file-transfer'
+import { GooglePlus } from '@ionic-native/google-plus'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCPYSlzENcbt-HGhNJBV-9KFE5PB8z1vYA",
+  authDomain: "vocabulaire-1f3c2.firebaseapp.com",
+  databaseURL: "https://vocabulaire-1f3c2.firebaseio.com",
+  projectId: "vocabulaire-1f3c2",
+  storageBucket: "vocabulaire-1f3c2.appspot.com",
+  messagingSenderId: "71486533817"
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    BrowserAnimationsModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    IonicModule.forRoot(MyApp, {
+      scrollPadding: false,
+      scrollAssist: true,
+      autoFocusAssist: false,
+      preloadModules: true
+    }),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule.enablePersistence(),
+    HttpModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ScreenOrientation,
+    LanguageProvider,
+    Globalization,
+    DateProvider,
+    StreakProvider,
+    Clipboard,
+    FileTransfer,
+    GooglePlus
   ]
 })
-export class AppModule {}
+export class AppModule { }

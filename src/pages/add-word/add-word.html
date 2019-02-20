@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'add_word' | translate}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="viewCtrl.dismiss()" color="primary">{{'cancel' | translate}}</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="addWord()" color="primary" [disabled]="!this.word || !this.translation">
+        <b>{{'done' | translate}}</b>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item showWhen="ios">
+      <ion-input type="email" [placeholder]="wordPlaceholder + ' (' + language + ')'" [(ngModel)]="word" (ionChange)='wordChange()'
+        #wordInput></ion-input>
+    </ion-item>
+    <ion-item showWhen="ios">
+      <ion-input type="email" [placeholder]="translationPlaceholder" [(ngModel)]="translation" (ionChange)='translationChange()'></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" showWhen="android" no-lines>
+      <ion-input type="email" [placeholder]="wordPlaceholder" [(ngModel)]="word" (ionChange)='wordChange()' #wordInput></ion-input>
+    </ion-item>
+    <ion-item class="inputItem" showWhen="android" no-lines>
+      <ion-input type="email" [placeholder]="translationPlaceholder" [(ngModel)]="translation" (ionChange)='translationChange()'></ion-input>
+    </ion-item>
+    <ion-item class="autoTranslateItem">
+      <ion-label>{{'auto_translate' | translate}} (Beta)
+        <ion-icon ios="ios-help-circle-outline" md="md-help-circle" class="helpIcon" (click)="showTooltip()"></ion-icon>
+      </ion-label>
+      <ion-toggle [(ngModel)]="autoTranslate" (ionChange)="autoTranslateToggle()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <img src="./assets/imgs/white-regular@3x.png" class="googleTranslateIcon" alt="Powered by Google Translate">
+</ion-content>

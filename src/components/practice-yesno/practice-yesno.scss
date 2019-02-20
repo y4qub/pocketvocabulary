@@ -1,0 +1,33 @@
+practice-yesno {
+    h2 {
+        font-size: 30px;
+        color: gray;
+        margin-bottom: 1em;
+    }
+    .yes-no-container {
+        display: flex;
+        grid-gap: 25px;
+        justify-content: space-around;
+    }
+    .circle {
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        border-radius: 50%;
+        width: 140px;
+        height: 140px;
+        transition: 0.5s;
+    }
+    .circle:active {
+        background-color: #222222 !important;
+        transition: none;
+    }
+    .correct {
+        background-color: green;
+    }
+    .wrong {
+        background-color: red;
+    }
+}

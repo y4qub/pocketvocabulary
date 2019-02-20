@@ -1,0 +1,6 @@
+<h1>{{generatedWord1}}</h1>
+<h2>{{generatedWord2}}</h2>
+<div class="yes-no-container">
+  <div class="circle" [@green]="greenYes" [@red]="redYes" (click)="check(true)">YES</div>
+  <div class="circle" [@green]="greenNo" [@red]="redNo" (click)="check(false)">NO</div>
+</div>

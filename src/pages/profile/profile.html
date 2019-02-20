@@ -1,0 +1,45 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>{{ 'profile' | translate }}</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="openSettings()" *ngIf="auth.authState | async">
+				<ion-icon name="settings" color="primary" showWhen="android"></ion-icon>
+				<ion-icon name="cog" color="primary" showWhen="ios"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<span *ngIf="auth.authState | async">
+		<img *ngIf="(auth.authState | async)?.photoURL" [src]="(auth.authState | async)?.photoURL" class="userPhoto">
+		<ion-icon *ngIf="!(auth.authState | async)?.photoURL" name="contact" class="userIcon"></ion-icon>
+		<h1>{{(auth.authState | async)?.displayName}}</h1>
+		<h4 ion-text color="gray">{{(auth.authState | async)?.email}}</h4>
+		<ion-list no-lines>
+			<ion-item>
+				<ion-label>Streak</ion-label>
+				<ion-note item-end>
+					<span *ngIf="streak == 1">{{streak}} {{ 'day' | translate }}</span>
+					<span *ngIf="streak > 1">{{streak}} {{ 'days' | translate }}</span>
+					<span *ngIf="streak == 0">0 {{ 'days2' | translate }}</span>
+					<ion-icon *ngIf="practicedWords >= wordsToPractice" name="checkmark-circle" color="secondary" class="checkmark"></ion-icon>
+				</ion-note>
+			</ion-item>
+			<ion-item>
+				<ion-label>{{ 'practiced_words' | translate }}</ion-label>
+				<ion-note item-end *ngIf="practicedWords >= wordsToPractice" style="color: #32db64 !important;">{{practicedWords}}</ion-note>
+				<ion-note item-end *ngIf="practicedWords < wordsToPractice" style="color: #f53d3d !important;">{{practicedWords}}</ion-note>
+			</ion-item>
+			<ion-item>
+				<ion-label>{{ 'saved_words' | translate }}</ion-label>
+				<ion-note item-end>{{savedWords}}</ion-note>
+			</ion-item>
+			<ion-item class="logoutBtn">
+				<ion-label (click)="logout()">
+					<b ion-text color="primary">{{ 'logout' | translate }}</b>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</span>
+</ion-content>

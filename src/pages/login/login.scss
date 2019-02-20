@@ -1,0 +1,53 @@
+page-login {
+    input[type=checkbox] {
+        transform: scale(1.6);
+        margin-right: 13px;
+    }
+    .acceptance {
+        margin-top: 18px;
+    }
+    .acceptance * {
+        display: inline;
+        line-height: 24px !important;
+    }
+    .textBtn {
+        font-size: 0.9em;
+        padding: 0.4em 0;
+    }
+    .fullBtn {
+        width: 92%;
+        margin: 25px auto 17px;
+    }
+    .textBtn:active {
+        color: color($colors, primary)
+    }
+    .item {
+        border-bottom: 1px solid gray;
+    }
+    .signInWith {
+        width: 92%;
+        height: 12px;
+        border-bottom: 1px solid white;
+        margin: 1em auto;
+    }
+    .text {
+        font-size: 1.3em;
+        color: color($colors, gray);
+    }
+    .text#background {
+        padding: 0 20px;
+        background-color: #0D0D0D;
+    }
+    .text#title {
+        font-size: 1.3em;
+        color: color($colors, gray);
+        margin-top: 10%;
+        margin-bottom: 20px;
+    }
+    .signInIcons {
+        margin: 2em;
+    }
+    .signInIcon {
+        width: 2.4em;
+    }
+}

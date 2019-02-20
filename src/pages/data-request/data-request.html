@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Data Export</ion-title>
+    <ion-buttons end>
+      <button ion-button color="primary" (click)="viewCtrl.dismiss()">
+        <b>{{'done' | translate}}</b>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>This is all your data currently stored in our database:</p>
+  <div id="container" *ngIf="data">{{data | json}}</div>
+  <button ion-button (click)="copy()" *ngIf="data">Copy to clipboard</button>
+  <button ion-button (click)="download()" *ngIf="data">Download</button>
+</ion-content>

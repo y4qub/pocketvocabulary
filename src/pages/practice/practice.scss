@@ -1,0 +1,153 @@
+page-practice {
+    input {
+        text-align: center;
+        padding: 0;
+    }
+    ion-input {
+        border-radius: 50px;
+        width: 80%;
+        margin: 0 auto 0 auto;
+        font-size: 1.5em;
+        background-color: rgb(32, 32, 32);
+        color: white;
+        padding: 0;
+        transition: 0.3s;
+    }
+    button.action {
+        margin-top: 1.5em;
+    }
+    .timing {
+        float: left;
+        width: 65%;
+        height: 2px;
+        border-radius: 50px;
+        position: relative;
+        background-color: white;
+        z-index: 3;
+        margin: -2px auto 0 auto;
+        margin-left: 17%;
+        transition: 5s linear;
+    } // initial setup
+    .card {
+        position: relative;
+        top: 50%;
+        transform: translate(0, -50%);
+        background-color: #323232;
+        width: 90%;
+        height: 285px;
+        margin: auto;
+        border-radius: 25px;
+        padding: 4px 21px;
+    }
+    .card h1 {
+        text-align: left;
+        font-size: 2.2em;
+        margin-bottom: 0.4em;
+    }
+    .card button {
+        width: 91%;
+        height: 48px;
+        border-radius: 15px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    ion-item {
+        background-color: #323232 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    ion-toggle {
+        padding-right: 0px !important;
+    }
+    div.item-inner {
+        padding: 0 !important;
+    }
+    ion-select {
+        margin-right: -3px;
+        max-width: 80%;
+    }
+    ion-label {
+        color: rgb(202, 202, 202) !important;
+    }
+    div.select-icon {
+        height: inherit !important;
+    } //GENERAL
+    .container {
+        width: 90%;
+        margin: 60px auto 0 auto;
+    }
+    h1 {
+        font-size: 30px;
+        margin-bottom: 1em;
+    } //select
+    .grid {
+        display: grid;
+        grid-template: 143px 143px / 143px 143px;
+        grid-gap: 25px;
+        justify-content: center;
+    }
+    .item2 {
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+    .item2:active {
+        background-color: #222222 !important;
+        transition: none;
+    } //yes no
+    h2 {
+        font-size: 30px;
+        color: gray;
+        margin-bottom: 1em;
+    }
+    .yes-no-container {
+        display: flex;
+        grid-gap: 25px;
+        justify-content: space-around;
+    }
+    .circle {
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        border-radius: 50%;
+        width: 140px;
+        height: 140px;
+        transition: 0.5s;
+    }
+    .circle:active {
+        background-color: #222222 !important;
+        transition: none;
+    }
+    .correct {
+        background-color: green;
+    }
+    .wrong {
+        background-color: red;
+    } // Input 
+    #check-wrapper {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        #check-text {
+            color: gray;
+            font-size: 20px;
+        }
+        #check-btn {
+            height: 60px;
+            width: 60px;
+            margin-right: 16px;
+        }
+        #check-btn-icon {
+            font-size: 37px;
+        }
+    }
+}

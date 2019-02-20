@@ -1,5 +1,7 @@
 {
   "name": "pocketvocabulary",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

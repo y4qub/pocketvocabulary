@@ -28,8 +28,6 @@ export class AddLanguagePage {
   }
 
   ionViewDidLoad() {
-    //console.log(this.languageProvider.getLanguageNames())
-    //console.log(this.languageProvider.getSupportedNames())
     this.setItems().then((items: Array<string>) => this.languages = items)
   }
 

@@ -20,7 +20,7 @@
   </ion-card>
   <div class="acceptance" *ngIf="!existingAccount">
     <input type="checkbox" class="checkbox" [(ngModel)]="accepted">
-    <p>I have read and accepted the<br> <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a></p>
+    <p>I have read and accepted the<br> <a (click)="openPolicy('Privacy Policy')">Privacy Policy</a> and <a (click)="openPolicy('Terms of Service')">Terms of Service</a></p>
   </div>
   <button ion-button full class="fullBtn" *ngIf="existingAccount" (click)="signIn(email, password)">{{ 'sign_in' | translate
     }}

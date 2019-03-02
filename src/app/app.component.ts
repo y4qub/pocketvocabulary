@@ -74,14 +74,14 @@ export class MyApp {
         this.screenOrientation.unlock()
       this.streak.checkStreak()
     } else {
-      // Go to intro if haven't seen already -> NO INTRO SO FAR
-      // this.storage.get('intro').then(value => {
-      //   if (value) {
-      //     this.nav.setRoot('LoginPage')
-      //   } else {
-      //     this.nav.setRoot('IntroPage')
-      //   }
-      // })
+      //Go to intro if haven't seen already -> NO INTRO SO FAR
+      this.storage.get('intro').then(value => {
+        if (value) {
+          this.nav.setRoot('LoginPage')
+        } else {
+          this.nav.setRoot('IntroPage')
+        }
+      })
       this.nav.setRoot('LoginPage')
       // Disable rotation
       if (this.platform.is('cordova'))

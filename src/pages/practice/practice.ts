@@ -356,7 +356,6 @@ export class PracticePage {
     this.attempts++
     if (generatedWord2Normalized == answerNormalized) {
       this.score++
-      //anim
       this.greenYes = 'yes'
     } else {
       this.redYes = 'yes'

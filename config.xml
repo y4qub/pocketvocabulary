@@ -19,6 +19,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="ShowSplashScreenSpinner" value="false"/>
     <platform name="android">
         <config-file parent="/resources" target="./res/values/strings.xml">
             <string name="fb_app_id">615737102107655</string>
@@ -84,13 +85,12 @@
         <variable name="REVERSED_CLIENT_ID" value="71486533817-eiqktliuobdhvu398i3fsc8dru7ug0sl.apps.googleusercontent.com" />
     </plugin>
     <plugin name="cordova-universal-links-plugin" spec="https://github.com/walteram/cordova-universal-links-plugin" />
-    <allow-navigation href="http://192.168.0.14:8100" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="615737102107655" />
         <variable name="APP_NAME" value="Pocket Vocabulary" />
     </plugin>
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
-        <variable name="URL_SCHEME" value="com.nix.pocketvocabulary" />
+        <variable name="URL_SCHEME" value="com.jakubmurcek.pocketvocabulary" />
     </plugin>
     <universal-links>
         <host name="https://nckg8.app.goo.gl" scheme="https" />

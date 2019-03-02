@@ -16,12 +16,7 @@
 
 <ion-content (click)="contentTouch()" no-bounce>
   <!-- PLACEHOLDERS -->
-  <h4 ion-text class="note" *ngIf="!language && !words1 && words1?.length >= 4">{{'tap_to_select_a_language' | translate}}</h4>
-  <h4 ion-text class="note" *ngIf="language && !words1 && words1?.length >= 4">{{'tap_to_add_words' | translate}}</h4>
   <h4 ion-text class="note" *ngIf="words1?.length < 4">{{'add_some_more_words' | translate}}</h4>
-  <!--<round-progress [current]="currentValue" [max]="100" [color]="'#ffffff'" [background]="'#0D0D0D'" [radius]="15" [rounded]="false"
-  [stroke]="15" [clockwise]="true" [responsive]="false" [animation]="'linearEase'" [duration]="7000" (onRender)="test($event)"></round-progress>
-  -->
   <!-- OPTIONS -->
   <div class="card" *ngIf="options && words1?.length >= 4">
     <h1>Options</h1>
@@ -30,10 +25,6 @@
         <ion-label (click)="practiceOptions.repeatWords = !practiceOptions.repeatWords">Repeat Words</ion-label>
         <ion-toggle [(ngModel)]="practiceOptions.repeatWords" color="primary"></ion-toggle>
       </ion-item>
-      <!--<ion-item>
-        <ion-label>Time Practice</ion-label>
-        <ion-toggle [(ngModel)]="practiceOptions.timePractice"></ion-toggle>
-      </ion-item>-->
       <ion-item>
         <ion-label>Types</ion-label>
         <ion-select [(ngModel)]="practiceOptions.types" multiple="true" [selectOptions]="selectOptions" placeholder="Choose">
@@ -58,7 +49,7 @@
   <div class="container" *ngIf="input" [@visibility]="visibility">
     <h1>{{generatedWord1}}</h1>
     <ion-input type="email" class="input" [(ngModel)]="answer" [placeholder]="('translate_to' | translate) + translateTo"
-      #input [@green]="greenYes" [@red]="redYes"></ion-input>
+      #input [@green]="greenYes" [@red]="redYes" (keyup.enter)="check()"></ion-input>
       <div id="check-wrapper">
         <button ion-button id="check-btn" icon-only round (click)="check()">
           <ion-icon name="md-arrow-forward" id="check-btn-icon"></ion-icon>

@@ -11,7 +11,7 @@
 
 <ion-content padding>
   <p>This is all your data currently stored in our database:</p>
-  <div id="container" *ngIf="data">{{data | json}}</div>
   <button ion-button (click)="copy()" *ngIf="data">Copy to clipboard</button>
   <button ion-button (click)="download()" *ngIf="data">Download</button>
+  <div id="container" *ngIf="data">{{data | json}}</div>
 </ion-content>

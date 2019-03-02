@@ -25,4 +25,17 @@ page-profile {
     ion-item {
         padding: 0 10px 0 22px !important;
     }
+
+    .deleteBtn ion-label {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        color: color($colors, danger);
+    }
+    .requestBtn ion-label {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        color: color($colors, primary);
+    }
 }

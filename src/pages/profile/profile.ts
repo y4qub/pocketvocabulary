@@ -13,12 +13,9 @@ import { User } from 'firebase'
 })
 export class ProfilePage {
   error: string
-  streak: number = 0
   savedWords = 0
-  practicedWords: number
-  wordsToPractice: number
   user: User
-  constructor(public translate: TranslateService, public platform: Platform, public auth: AngularFireAuth, public navParams: NavParams, public db: AngularFireDatabase, public modalCtrl: ModalController, public menu: MenuController, public alert: AlertController) {
+  constructor(public alertCtrl: AlertController, public translate: TranslateService, public platform: Platform, public auth: AngularFireAuth, public navParams: NavParams, public db: AngularFireDatabase, public modalCtrl: ModalController, public menuCtrl: MenuController) {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
@@ -28,11 +25,7 @@ export class ProfilePage {
     if (!this.user) return
     this.db.database.ref(`users/${this.user.uid}`).once('value').then(data => {
       const snapshot = data.val()
-      if (snapshot['info']) var info = snapshot['info']
       if (snapshot['languages']) var languages = snapshot['languages']
-      this.streak = info['streak']
-      this.practicedWords = info['practicedWords']
-      if (info['wordsToPractice']) this.wordsToPractice = info['wordsToPractice']
       this.savedWords = 0
       Object.keys(languages).forEach(element => {
         if (!languages[element]['vocabulary']) return
@@ -42,15 +35,15 @@ export class ProfilePage {
   }
 
   ionViewDidEnter() {
-    this.menu.enable(false)
+    this.menuCtrl.enable(false)
   }
 
   ionViewDidLeave() {
-    this.menu.enable(true)
+    this.menuCtrl.enable(true)
   }
 
   logout() {
-    this.alert.create({
+    this.alertCtrl.create({
       title: this.translate.instant('do_you_really_want_to_log_out'),
       cssClass: 'alertDark',
       buttons: [
@@ -73,4 +66,32 @@ export class ProfilePage {
   openSettings() {
     this.modalCtrl.create('SettingsPage').present()
   }
+
+  getOrEditData() {
+    this.modalCtrl.create('DataRequestPage').present()
+  }
+
+  openDeleteAlert() {
+    this.alertCtrl.create({
+      title: this.translate.instant('are_you_sure_you_want_to_delete_your_account'),
+      subTitle: this.translate.instant('this_will_irreversibly_erase_all_of_your_data'),
+      cssClass: 'alertDark',
+      buttons: [
+        {
+          text: this.translate.instant('no'),
+          role: 'cancel',
+          cssClass: this.platform.is('ios') ? 'ios-cancel-btn' : null,
+        },
+        {
+          text: this.translate.instant('yes'),
+          cssClass: this.platform.is('ios') ? 'ios-delete-btn' : null,
+          handler: () => {
+            if (!this.user) return
+            this.db.database.ref(`users/${this.user.uid}`).remove().then(() => this.auth.auth.currentUser.delete()).then(() => this.auth.auth.signOut()).catch(console.error)
+          }
+        }
+      ]
+    }).present()
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { NavController, ModalController, MenuController, AlertController, IonicPage, ItemSliding } from 'ionic-angular'
+import { ModalController, MenuController, AlertController, IonicPage } from 'ionic-angular'
 import { AngularFireDatabase } from 'angularfire2/database'
 import { AngularFireAuth } from 'angularfire2/auth'
 import { NavParams } from 'ionic-angular/navigation/nav-params'
@@ -20,7 +20,7 @@ export class VocabularyPage {
   language: string
   speedOfSpeech: any
   user: User
-  constructor(public translate: TranslateService, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public languageProvider: LanguageProvider, public storage: Storage, public menu: MenuController, public modalCtrl: ModalController, public navCtrl: NavController, public db: AngularFireDatabase, public auth: AngularFireAuth, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public translate: TranslateService, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public languageProvider: LanguageProvider, public storage: Storage, public menu: MenuController, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth, public navParams: NavParams, public alertCtrl: AlertController) {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
@@ -65,48 +65,6 @@ export class VocabularyPage {
     this.languageProvider.fetchWords(this.language, (words1, words2) => {
       this.words1 = words1
       this.words2 = words2
-    })
-  }
-
-  reset() {
-    this.words1 = null
-    this.words2 = null
-  }
-
-  editWord(key: string, oldValue: string, item: ItemSliding) {
-    this.alertCtrl.create({
-      title: `${this.translate.instant('edit')} ${key.bold()}`,
-      cssClass: 'alertDark',
-      inputs: [
-        {
-          name: 'word',
-          value: oldValue,
-          id: 'alert-input'
-        }
-      ],
-      buttons: [
-        {
-          text: this.translate.instant('cancel'),
-          role: 'cancel'
-        },
-        {
-          text: this.translate.instant('edit'),
-          handler: data => {
-            if (!this.user || !data.word) return
-            var newObj = {}
-            newObj[key] = data.word
-            this.db.database.ref(`users/${this.user.uid}/languages/${this.language}/vocabulary`).update(newObj).then(() => {
-              // Reload the vocabulary list
-              this.reloadDatabase()
-            })
-          }
-        }
-      ]
-    }).present().then(() => {
-      // Focus
-      const firstInput: any = document.querySelector('ion-alert input')
-      firstInput.focus()
-      item.close()
     })
   }
 

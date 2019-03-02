@@ -101,7 +101,7 @@
       "cordova-plugin-browsertab": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "com.nix.pocketvocabulary",
+        "URL_SCHEME": "com.jakubmurcek.pocketvocabulary",
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"

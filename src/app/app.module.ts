@@ -24,7 +24,7 @@ import { FileTransfer } from '@ionic-native/file-transfer'
 import { GooglePlus } from '@ionic-native/google-plus'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCPYSlzENcbt-HGhNJBV-9KFE5PB8z1vYA",
+  apiKey: "AIzaSyBjxUNBy7DvTlaxQtOzTahAJOX2mAj16vI",
   authDomain: "vocabulaire-1f3c2.firebaseapp.com",
   databaseURL: "https://vocabulaire-1f3c2.firebaseio.com",
   projectId: "vocabulaire-1f3c2",
@@ -52,7 +52,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       preloadModules: true
     }),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule.enablePersistence(),
     HttpModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,

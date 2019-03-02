@@ -2,19 +2,4 @@ page-settings {
     .select-text {
         color: color($colors, gray);
     }
-    .deleteBtn ion-label {
-        display: flex;
-        justify-content: center;
-        padding: 0;
-        color: color($colors, danger);
-    }
-    .requestBtn ion-label {
-        display: flex;
-        justify-content: center;
-        padding: 0;
-        color: color($colors, primary);
-    }
-    .content-ios {
-        margin-top: 40px;
-    }
 }

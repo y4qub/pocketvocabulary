@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-list no-lines>
-    <ion-item>
+    <!--<ion-item>
       <ion-label>{{ 'daily_goal' | translate }}</ion-label>
       <ion-select [(ngModel)]="wordsToPractice" [selectOptions]="selectOptions">
         <ion-option value="5">5 {{ 'words' | translate }}</ion-option>
@@ -22,14 +22,6 @@
         <ion-option value="20">20 {{ 'words' | translate }}</ion-option>
         <ion-option value="30">30 {{ 'words' | translate }}</ion-option>
         <ion-option value="50">50 {{ 'words' | translate }}</ion-option>
-      </ion-select>
-    </ion-item>
-    <!--<ion-item>
-      <ion-label>{{ 'time_practice_interval' | translate }}</ion-label>
-      <ion-select [(ngModel)]="timedPracticeInterval" [selectOptions]="selectOptions">
-        <ion-option value="5">5 s</ion-option>
-        <ion-option value="10">10 s</ion-option>
-        <ion-option value="20">20 s</ion-option>
       </ion-select>
     </ion-item>-->
     <ion-item>
@@ -46,13 +38,5 @@
         <ion-option *ngFor="let language of languages" [value]="language.code">{{language.name}}</ion-option>
       </ion-select>
     </ion-item>-->
-  </ion-list>
-  <ion-list no-lines class="content-ios">
-    <ion-item class="requestBtn" (click)="getOrEditData()">
-      <ion-label>{{ 'export_or_edit_my_data' | translate }}</ion-label>
-    </ion-item>
-    <ion-item class="deleteBtn" (click)="openDeleteAlert()">
-      <ion-label>{{ 'delete_my_account' | translate }}</ion-label>
-    </ion-item>
   </ion-list>
 </ion-content>

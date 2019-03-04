@@ -43,6 +43,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class PracticePage {
+  timeoutWorkaround = false
   @ViewChild('input') input2: TextInput
   @ViewChild('toolbar') toolbar: Toolbar
   @ViewChild('sectionSelect') sectionSelect: Select
@@ -96,10 +97,10 @@ export class PracticePage {
   infoRef: any
   constructor(public translate: TranslateService, public date: DateProvider, public platform: Platform, public languageProvider: LanguageProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, public db: AngularFireDatabase, public auth: AngularFireAuth, public menu: MenuController, public modalCtrl: ModalController) {
     this.languageProvider.getLanguageName(this.translate.currentLang).then((value: string) => this.currentLanguage = value)
-
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
+    setTimeout(() => this.timeoutWorkaround = true, 300) // workaround
   }
 
   ionViewDidEnter() {

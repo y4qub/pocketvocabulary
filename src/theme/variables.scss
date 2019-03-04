@@ -40,8 +40,6 @@ $colors: (
   gray:        #c5c5c5,
   dark:         #222,
 );
-//ios #FF9600
-//android #FF9800
 
 
 // App iOS Variables
@@ -73,7 +71,6 @@ $colors: (
 // default are overridden.
 
 
-//@import "ionic.theme.default";
 @import "ionic.theme.dark";
 
 // Ionicons
@@ -124,3 +121,11 @@ $alert-ios-button-border-color: rgb(85, 85, 85);
 $label-ios-text-color: white;
 $label-md-text-color: white;
 $alert-md-background-color: rgb(40, 40, 40);
+$text-input-ios-input-clear-icon-color: rgb(82, 82, 82);
+$text-input-md-input-clear-icon-color: rgb(82, 82, 82);
+$text-input-ios-input-clear-icon-size: 20px;
+$text-input-ios-input-clear-icon-size: 20px;
+$text-input-ios-input-clear-icon-width: 27px;
+$text-input-md-input-clear-icon-width: 18px;
+$alert-md-list-border-bottom: 0;
+$alert-md-list-border-top: 0;

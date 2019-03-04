@@ -75,17 +75,18 @@ ion-content {
 // Web
 .innercontent-padding ion-card-header .item {
     padding: 4px 30px !important;
-  }
+}
 
-  .innercontent-padding ion-card-header,
-  .innercontent-padding ion-card-content,
-  .innercontent-padding ion-card-content .list ion-item-content, {
+.innercontent-padding ion-card-header,
+.innercontent-padding ion-card-content,
+.innercontent-padding ion-card-content .list ion-item-content,
+    {
     padding: 0 !important;
-  }
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
     .innercontent-padding {
-      width: 60% !important;
-      margin: 23px auto !important;
+        width: 60% !important;
+        margin: 23px auto !important;
     }
-  }
+}

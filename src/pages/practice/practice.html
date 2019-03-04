@@ -15,8 +15,7 @@
 </ion-header>
 
 <ion-content (click)="contentTouch()" no-bounce>
-  <!-- PLACEHOLDERS -->
-  <h4 ion-text class="note" *ngIf="words1?.length < 4">{{'add_some_more_words' | translate}}</h4>
+  <h4 ion-text class="note" *ngIf="words1?.length < 4 && timeoutWorkaround">{{'add_some_more_words' | translate}}</h4>
   <!-- OPTIONS -->
   <div class="card" *ngIf="options && words1?.length >= 4">
     <h1>Options</h1>
@@ -46,9 +45,9 @@
   </div>
 
   <!-- INPUT -->
-  <div class="container" *ngIf="input" [@visibility]="visibility">
+  <div class="container" id="input-container" *ngIf="input" [@visibility]="visibility">
     <h1>{{generatedWord1}}</h1>
-    <ion-input type="email" class="input" [(ngModel)]="answer" [placeholder]="('translate_to' | translate) + translateTo"
+    <ion-input type="email" class="input" [(ngModel)]="answer" [placeholder]="'translate_to' | translate"
       #input [@green]="greenYes" [@red]="redYes" (keyup.enter)="check()"></ion-input>
       <div id="check-wrapper">
         <button ion-button id="check-btn" icon-only round (click)="check()">
@@ -59,7 +58,7 @@
   </div>
 
   <!-- SELECT -->
-  <div class="container" *ngIf="select" [@visibility]="visibility">
+  <div class="container" id="select-container" *ngIf="select" [@visibility]="visibility">
     <h1>{{generatedWord1}}</h1>
     <div class="grid">
       <div class="item2" (click)="correct()" [style.order]="randomNumbers[0]" [@green]="green">{{generatedWord2}}</div>
@@ -70,7 +69,7 @@
   </div>
 
   <!-- YES/NO -->
-  <div class="container" *ngIf="yesNo" [@visibility]="visibility">
+  <div class="container" id="yesno-container" *ngIf="yesNo" [@visibility]="visibility">
     <h1>{{generatedWord1}}</h1>
     <h2>{{generatedWord2}}</h2>
     <div class="yes-no-container">

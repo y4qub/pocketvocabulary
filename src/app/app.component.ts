@@ -23,9 +23,9 @@ export class MyApp {
   editMode = false
   myForm: FormGroup
   selectedLanguage: string
-  @ViewChild('nav') nav: NavController
   user: User
   infoObj = { info: { streak: 0, practicedWords: 0, wordsToPractice: 5, lastActive: this.date.getToday(), timedPracticeInterval: 5 } }
+  @ViewChild('nav') nav: NavController
   constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public language: LanguageProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
@@ -34,9 +34,6 @@ export class MyApp {
     this.initTranslate()
     this.myForm = this.fb.group({
       listOptions: ['']
-    })
-    platform.resume.subscribe(() => {
-      this.streak.checkStreak()
     })
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -62,8 +59,7 @@ export class MyApp {
       this.generateLanguages(() => {
         this.storage.get('selectedLanguage').then((language: string) => {
           if (language) {
-            this.nav.setRoot('TabsPage', { language: language })
-            this.selectedLanguage = language // Visual select
+            this.selectLanguage(language)
           } else {
             this.nav.setRoot('TabsPage')
           }
@@ -74,7 +70,7 @@ export class MyApp {
         this.screenOrientation.unlock()
       this.streak.checkStreak()
     } else {
-      //Go to intro if haven't seen already -> NO INTRO SO FAR
+      // Go to intro if haven't seen already
       this.storage.get('intro').then(value => {
         if (value) {
           this.nav.setRoot('LoginPage')
@@ -90,18 +86,16 @@ export class MyApp {
   }
 
   initTranslate() {
-    // Fallback
-    this.translate.setDefaultLang('en')
+    this.translate.setDefaultLang('en') // Fallback
     this.translate.use('en')
-    // AZ TAM BUDE LANGUAGE SWITCH ZPATKY (GIT)
   }
 
   selectLanguage(language: string, reload?: boolean) {
-    // EVERYTIME RELOAD NOW DUE TO A BUG WHEN DELETES AND CREATES A LANGUGE IMMEDIATELY (GIT)
     this.selectedLanguage = language // Visual select
     this.nav.setRoot('TabsPage', { language: language })
     this.storage.set('selectedLanguage', language)
-    this.menuCtrl.close()
+    if (this.menuCtrl.isOpen)
+      this.menuCtrl.close()
   }
 
   restoreLastLanguage() {
@@ -156,8 +150,10 @@ export class MyApp {
           handler: () => {
             // Delete the language
             if (!this.user) return
-            this.db.list(`users/${this.user.uid}/languages`).remove(language).then(() => this.generateLanguages())
-            this.nav.setRoot('TabsPage')
+            this.db.list(`users/${this.user.uid}/languages`).remove(language).then(() => {
+              this.generateLanguages()
+              if (this.languages.length > 0) this.selectLanguage(this.languages[1])
+            })
           }
         }
       ]

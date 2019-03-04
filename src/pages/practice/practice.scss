@@ -76,7 +76,20 @@ page-practice {
     } //GENERAL
     .container {
         width: 90%;
-        margin: 60px auto 0 auto;
+        margin: auto;
+    }
+    #select-container {
+        position: relative;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+    #input-container {
+        margin-top: 40px;
+    }
+    #yesno-container {
+        position: relative;
+        top: 50%;
+        transform: translate(0, -60%);
     }
     h1 {
         font-size: 30px;

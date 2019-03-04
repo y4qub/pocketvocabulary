@@ -94,4 +94,8 @@ export class ProfilePage {
     }).present()
   }
 
+  openPolicy(policyName: string) {
+    this.modalCtrl.create('PoliciesPage', {policyName: policyName}).present()
+  }
+
 }

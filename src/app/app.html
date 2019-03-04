@@ -29,22 +29,12 @@
             <ion-spinner name="ios" showWhen="ios"></ion-spinner>
         </div>
         <form [formGroup]="myForm">
-            <!-- iOS List -->
-            <ion-list radio-group *ngIf="languages" formControlName="listOptions" showWhen="ios" [(ngModel)]="selectedLanguage">
-                <ion-item *ngFor="let language of languages" (click)="deleteLanguage(language)">
-                    <ion-label>
-                        <ion-icon name="remove-circle" class="remove-ios" *ngIf="editMode"></ion-icon>
-                        <span>{{language}}</span>
-                    </ion-label>
-                    <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language"></ion-radio>
-                </ion-item>
-            </ion-list>
-            <!-- Android List -->
-            <ion-list radio-group *ngIf="languages" formControlName="listOptions" showWhen="android" [(ngModel)]="selectedLanguage" no-lines>
+            <ion-list radio-group *ngIf="languages" formControlName="listOptions" [(ngModel)]="selectedLanguage" no-lines>
                 <ion-item *ngFor="let language of languages" (click)="deleteLanguage(language)">
                     <ion-label>
                         <span>{{language}}</span>
-                        <ion-icon name="trash" class="remove-android" *ngIf="editMode"></ion-icon>
+                        <ion-icon name="remove-circle" class="remove-ios" *ngIf="editMode" showWhen="ios"></ion-icon>
+                        <ion-icon name="trash" class="remove-android" *ngIf="editMode" showWhen="android"></ion-icon>
                     </ion-label>
                     <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language"></ion-radio>
                 </ion-item>

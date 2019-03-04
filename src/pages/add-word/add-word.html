@@ -12,26 +12,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content no-bounce>
   <ion-list>
-    <ion-item showWhen="ios">
-      <ion-input type="email" [placeholder]="wordPlaceholder + ' (' + language + ')'" [(ngModel)]="word" (ionChange)='wordChange()'
-        #wordInput></ion-input>
+    <ion-item>
+      <ion-input [placeholder]="'Word' + ' (' + language + ')'" [(ngModel)]="word" #wordInput clearInput autocapitalize="none"></ion-input>
+      <button ion-button icon-only clear item-right *ngIf="translation && !(word && translation)" (click)="autoTranslate('word')">
+        <ion-icon name="sync" class="auto-translate-icon"></ion-icon>
+      </button>
     </ion-item>
-    <ion-item showWhen="ios">
-      <ion-input type="email" [placeholder]="translationPlaceholder" [(ngModel)]="translation" (ionChange)='translationChange()'></ion-input>
-    </ion-item>
-    <ion-item class="inputItem" showWhen="android" no-lines>
-      <ion-input type="email" [placeholder]="wordPlaceholder" [(ngModel)]="word" (ionChange)='wordChange()' #wordInput></ion-input>
-    </ion-item>
-    <ion-item class="inputItem" showWhen="android" no-lines>
-      <ion-input type="email" [placeholder]="translationPlaceholder" [(ngModel)]="translation" (ionChange)='translationChange()'></ion-input>
-    </ion-item>
-    <ion-item class="autoTranslateItem">
-      <ion-label>{{'auto_translate' | translate}} (Beta)
-        <ion-icon ios="ios-help-circle-outline" md="md-help-circle" class="helpIcon" (click)="showTooltip()"></ion-icon>
-      </ion-label>
-      <ion-toggle [(ngModel)]="autoTranslate" (ionChange)="autoTranslateToggle()"></ion-toggle>
+    <ion-item>
+      <ion-input [placeholder]="'Translation' + ' (' + 'English' + ')'" [(ngModel)]="translation" clearInput autocapitalize="none"></ion-input>
+      <button ion-button icon-only clear item-right *ngIf="word && !(word && translation)" (click)="autoTranslate('translation')">
+        <ion-icon name="sync" class="auto-translate-icon"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
   <img src="./assets/imgs/white-regular@3x.png" class="googleTranslateIcon" alt="Powered by Google Translate">

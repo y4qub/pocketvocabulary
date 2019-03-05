@@ -13,11 +13,11 @@ page-login {
         display: inline;
         line-height: 24px !important;
     }
-    .textBtn {
+    .text-btn {
         font-size: 0.9em;
         padding: 0.4em 0;
     }
-    .fullBtn {
+    .full-btn {
         width: 92%;
         margin: 25px auto 17px;
     }
@@ -27,7 +27,7 @@ page-login {
     .item {
         border-bottom: 1px solid gray;
     }
-    .signInWith {
+    .sign-in-with {
         width: 92%;
         height: 12px;
         border-bottom: 1px solid white;
@@ -47,10 +47,13 @@ page-login {
         margin-top: 10%;
         margin-bottom: 20px;
     }
-    .signInIcons {
-        margin: 2em;
-    }
-    .signInIcon {
-        width: 2.4em;
+    .sign-in-icons {
+        margin: 2.5em;
+        .sign-in-icon {
+            width: 2.4em;
+        }
+        :first-child {
+            margin-right: 1.5em;
+        }
     }
 }

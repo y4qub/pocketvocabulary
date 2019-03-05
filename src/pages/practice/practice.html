@@ -15,48 +15,13 @@
 </ion-header>
 
 <ion-content (click)="contentTouch()" no-bounce>
+  <div id="wrapper">
+    <practice-options></practice-options>
+  </div>
+
   <h4 ion-text class="note" *ngIf="words1?.length < 4 && timeoutWorkaround">{{'add_some_more_words' | translate}}</h4>
-  <!-- OPTIONS -->
-  <div class="card" *ngIf="options && words1?.length >= 4">
-    <h1>Options</h1>
-    <ion-list no-lines>
-      <ion-item>
-        <ion-label (click)="practiceOptions.repeatWords = !practiceOptions.repeatWords">Repeat Words</ion-label>
-        <ion-toggle [(ngModel)]="practiceOptions.repeatWords" color="primary"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Types</ion-label>
-        <ion-select [(ngModel)]="practiceOptions.types" multiple="true" [selectOptions]="selectOptions" placeholder="Choose">
-          <ion-option value="0">Input</ion-option>
-          <ion-option value="1">Select</ion-option>
-          <ion-option value="2">Yes / No</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>Translation</ion-label>
-        <ion-select [(ngModel)]="practiceOptions.translation" [selectOptions]="selectOptions" placeholder="Choose">
-          <ion-option value="0">{{language}} to {{currentLanguage}}</ion-option>
-          <ion-option value="1">{{currentLanguage}} to {{language}}</ion-option>
-          <ion-option value="2">{{ 'both' | translate }}</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    <button ion-button round (click)="start()" [disabled]="!(practiceOptions.types && practiceOptions.translation && practiceOptions.types.length != 0)">START</button>
-  </div>
 
-  <!-- INPUT -->
-  <div class="container" id="input-container" *ngIf="input" [@visibility]="visibility">
-    <h1>{{generatedWord1}}</h1>
-    <ion-input type="email" class="input" [(ngModel)]="answer" [placeholder]="'translate_to' | translate"
-      #input [@green]="greenYes" [@red]="redYes" (keyup.enter)="check()"></ion-input>
-      <div id="check-wrapper">
-        <button ion-button id="check-btn" icon-only round (click)="check()">
-          <ion-icon name="md-arrow-forward" id="check-btn-icon"></ion-icon>
-        </button>
-        <div id="check-text">or hit return</div>
-      </div>
-  </div>
-
+  
   <!-- SELECT -->
   <div class="container" id="select-container" *ngIf="select" [@visibility]="visibility">
     <h1>{{generatedWord1}}</h1>

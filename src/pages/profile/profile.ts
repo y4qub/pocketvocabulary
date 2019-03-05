@@ -16,13 +16,25 @@ export class ProfilePage {
   savedWords = 0
   user: User
   constructor(public alertCtrl: AlertController, public translate: TranslateService, public platform: Platform, public auth: AngularFireAuth, public navParams: NavParams, public db: AngularFireDatabase, public modalCtrl: ModalController, public menuCtrl: MenuController) {
-    this.auth.authState.subscribe((auth: User) => {
-      this.user = auth
-    })
   }
 
   ionViewDidLoad() {
-    if (!this.user) return
+    this.auth.authState.subscribe((auth: User) => {
+      this.user = auth
+      this.fetchProfileData()
+    })
+  }
+
+  ionViewDidEnter() {
+    this.menuCtrl.enable(false)
+  }
+
+  ionViewDidLeave() {
+    this.menuCtrl.enable(true)
+  }
+
+  fetchProfileData() {
+    if(!this.user) return
     this.db.database.ref(`users/${this.user.uid}`).once('value').then(data => {
       const snapshot = data.val()
       if (snapshot['languages']) var languages = snapshot['languages']
@@ -32,14 +44,6 @@ export class ProfilePage {
         this.savedWords += Object.keys(languages[element]['vocabulary']).length
       })
     }).catch(console.error)
-  }
-
-  ionViewDidEnter() {
-    this.menuCtrl.enable(false)
-  }
-
-  ionViewDidLeave() {
-    this.menuCtrl.enable(true)
   }
 
   logout() {
@@ -95,7 +99,7 @@ export class ProfilePage {
   }
 
   openPolicy(policyName: string) {
-    this.modalCtrl.create('PoliciesPage', {policyName: policyName}).present()
+    this.modalCtrl.create('PoliciesPage', { policyName: policyName }).present()
   }
 
 }

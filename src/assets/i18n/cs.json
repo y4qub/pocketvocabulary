@@ -63,5 +63,10 @@
 	"fast": "Rychle",
 	"speed_of_speech": "Rychlost řeči",
 	"add_some_more_words": "Přidejte ještě pár slov",
-	"export_or_edit_my_data": "Exportovat nebo upravit má data"
+	"export_or_edit_my_data": "Exportovat nebo upravit má data",
+	"repeat_words": "Opakovat slova",
+	"types": "Typy",
+	"options": "Možnosti",
+	"privacy_policy": "Zásada ochrany osobních údajů",
+	"terms_of_service": "Všeobecné smluvní podmínky"
 }

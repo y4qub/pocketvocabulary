@@ -18,7 +18,6 @@ export class LanguageProvider {
       this.user = auth
     })
   }
-
   getLanguageList() {
     return languageList
   }
@@ -81,7 +80,7 @@ export class LanguageProvider {
       cb(languages)
     })
   }
-  
+
   //todo
   getSupportedNames() {
     let languageListCodes = []

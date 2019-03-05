@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, ViewChild, AfterViewChecked } from '@angular/core'
 import { NavParams, TextInput, IonicPage, Platform } from 'ionic-angular'
 import { ViewController } from 'ionic-angular/navigation/view-controller'
 import { AngularFireDatabase } from 'angularfire2/database'
@@ -18,13 +18,16 @@ export class AddWordPage {
   @ViewChild('wordInput') wordInput: TextInput
   word: string
   translation: string
-  wordPlaceholder
-  translationPlaceholder
+  wordPlaceholder: string
+  translationPlaceholder: string
   languageCode: string
-  translateTimeout: number = 1100
   user: User
   language: string
   constructor(public storage: Storage, public translateService: TranslateService, public platform: Platform, private toastCtrl: ToastController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AngularFireAuth, public db: AngularFireDatabase, public languages: LanguageProvider) {
+
+  }
+
+  ionViewDidLoad() {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
@@ -32,11 +35,6 @@ export class AddWordPage {
     this.languages.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)
   }
 
-  ionViewDidEnter() {
-    setTimeout(() => {
-      if (this.wordInput) this.wordInput.setFocus(), 150
-    })
-  }
 
   addWord() {
     if (!this.user) return

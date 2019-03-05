@@ -15,7 +15,7 @@ export class DataRequestPage {
   data: JSON
   constructor(public viewCtrl: ViewController, public db: AngularFireDatabase, public auth: AngularFireAuth, public clipboard: Clipboard, public fileTransfer: FileTransfer) { }
 
-  ngOnInit() {
+  ionViewDidLoad() {
     this.auth.authState.subscribe(user => {
       if (!user) return
       this.db.database.ref(`users/${user.uid}`).once('value').then(data => {
@@ -29,7 +29,7 @@ export class DataRequestPage {
   }
 
   download() {
-    this.fileTransfer.create().download('https://ionicframework.com/docs/native/file-transfer/', './file.html')
+    this.fileTransfer.create().download('https://ionicframework.com/docs/native/file-transfer/', './file.html').catch(console.error)
   }
 
 }

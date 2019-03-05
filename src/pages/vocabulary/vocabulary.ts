@@ -21,17 +21,17 @@ export class VocabularyPage {
   speedOfSpeech: any
   user: User
   constructor(public translate: TranslateService, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public languageProvider: LanguageProvider, public storage: Storage, public menu: MenuController, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.auth.authState.subscribe((auth: User) => {
-      this.user = auth
-    })
   }
 
   ionViewDidLoad() {
-    // Get Language
-    if (Object.keys(this.navParams.data).length) {
-      this.language = this.navParams.data
-      this.reloadDatabase()
-    }
+    this.auth.authState.subscribe((auth: User) => {
+      this.user = auth
+      // Get Language
+      if (Object.keys(this.navParams.data).length) {
+        this.language = this.navParams.data
+        this.reloadDatabase()
+      }
+    })
   }
 
   ionViewDidEnter() {

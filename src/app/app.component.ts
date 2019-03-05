@@ -11,16 +11,16 @@ import { Storage } from '@ionic/storage'
 import { LanguageProvider } from '../providers/language/language'
 import { Globalization } from '@ionic-native/globalization'
 import { TranslateService } from '@ngx-translate/core'
-import { DateProvider } from '../providers/date/date';
+import { DateProvider } from '../providers/date/date'
 import { User } from 'firebase'
-import { StreakProvider } from '../providers/streak/streak';
+import { StreakProvider } from '../providers/streak/streak'
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   languages: Array<string>
-  editMode = false
+  editMode: boolean = false
   myForm: FormGroup
   selectedLanguage: string
   user: User
@@ -87,7 +87,17 @@ export class MyApp {
 
   initTranslate() {
     this.translate.setDefaultLang('en') // Fallback
-    this.translate.use('en')
+    this.storage.get('appLanguage').then(value => {
+      if (value) {
+        this.translate.use(value)
+      } else {
+        if (this.translate.getBrowserLang() !== undefined) {
+          this.translate.use(this.translate.getBrowserLang())
+        } else {
+          this.translate.use('en')
+        }
+      }
+    })
   }
 
   selectLanguage(language: string, reload?: boolean) {
@@ -105,8 +115,8 @@ export class MyApp {
     })
   }
 
-  addList() {
-    let modal = this.modalCtrl.create('AddLanguagePage')
+  openAddLanguage() {
+    const modal = this.modalCtrl.create('AddLanguagePage')
     modal.present()
     // Select the new added language
     modal.onDidDismiss(language => {
@@ -122,17 +132,16 @@ export class MyApp {
       if (languages) {
         this.languages = languages
         // Automatically choose the language if it's the only one
-        if (languages.length == 1)
-          this.selectLanguage(languages[0])
+        if (languages.length == 1) this.selectLanguage(languages[0])
         if (cb) cb()
       } else {
         this.languages = []
-        this.addList()
+        this.openAddLanguage()
       }
     })
   }
 
-  deleteLanguage(language: string) {
+  openDeleteLanguage(language: string) {
     if (!this.editMode || this.menuCtrl.isAnimating()) return
     // Prompt for deleting the language
     this.alertCtrl.create({
@@ -147,17 +156,18 @@ export class MyApp {
         {
           text: this.translate.instant('delete'),
           cssClass: this.platform.is('ios') ? 'ios-delete-btn' : null,
-          handler: () => {
-            // Delete the language
-            if (!this.user) return
-            this.db.list(`users/${this.user.uid}/languages`).remove(language).then(() => {
-              this.generateLanguages()
-              if (this.languages.length > 0) this.selectLanguage(this.languages[1])
-            })
-          }
+          handler: () => this.deleteLanguage(language)
         }
       ]
     }).present()
+  }
+
+  deleteLanguage(language: string) {
+    if (!this.user) return
+    this.db.list(`users/${this.user.uid}/languages`).remove(language).then(() => {
+      this.generateLanguages()
+      if (this.languages.length > 0) this.selectLanguage(this.languages[1])
+    })
   }
 
   switchEditMode() {

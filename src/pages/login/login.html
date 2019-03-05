@@ -22,10 +22,10 @@
     <input type="checkbox" class="checkbox" [(ngModel)]="accepted">
     <p>I have read and accepted the<br> <a (click)="openPolicy('Privacy Policy')">Privacy Policy</a> and <a (click)="openPolicy('Terms of Service')">Terms of Service</a></p>
   </div>
-  <button ion-button full class="fullBtn" *ngIf="existingAccount" (click)="signIn(email, password)">{{ 'sign_in' | translate
+  <button ion-button full class="full-btn" *ngIf="existingAccount" (click)="signIn(email, password)">{{ 'sign_in' | translate
     }}
   </button>
-  <button ion-button full class="fullBtn" *ngIf="!existingAccount" (click)="signUp(email, password)">{{ 'sign_up' | translate
+  <button ion-button full class="full-btn" *ngIf="!existingAccount" (click)="signUp(email, password)">{{ 'sign_up' | translate
     }}
   </button>
   <div class="textBtn" *ngIf="!existingAccount" (click)="existingAccount = true">{{ 'i_already_have_an_account' | translate
@@ -34,12 +34,12 @@
   <div class="textBtn" *ngIf="existingAccount" (click)="existingAccount = false">{{ 'i_dont_have_an_account_yet' | translate
     }}
   </div>
-  <div class="textBtn" (click)="forgotPassword()">{{ 'forgot_password' | translate }}</div>
-  <div class="signInWith">
+  <div class="text-btn" (click)="forgotPassword()">{{ 'forgot_password' | translate }}</div>
+  <div class="sign-in-with">
     <span class="text" id="background">{{ 'or_sign_in_with' | translate }}</span>
   </div>
-  <div class="signInIcons">
-    <img src="./assets/imgs/fb.png" class="signInIcon" style="margin-right: 1em;" (click)="signInWithFacebook()" tappable>
-    <img src="./assets/imgs/g.png" class="signInIcon" (click)="signInWithGoogle()" tappable>
+  <div class="sign-in-icons">
+    <img src="./assets/imgs/fb.png" class="sign-in-icon" (click)="signInWithFacebook()" tappable>
+    <img src="./assets/imgs/g.png" class="sign-in-icon" (click)="signInWithGoogle()" tappable>
   </div>
 </ion-content>

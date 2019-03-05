@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
@@ -13,12 +13,12 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   selector: 'page-policies',
   templateUrl: 'policies.html',
 })
-export class PoliciesPage {
+export class PoliciesPage implements OnInit {
   policyName: string
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
   }
 
-  ionViewDidLoad() {
+  ngOnInit() {
     this.policyName = this.navParams.get('policyName')
   }
 

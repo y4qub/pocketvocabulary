@@ -32,11 +32,11 @@
         <ion-option value=1.6>{{ 'fast' | translate }}</ion-option>
       </ion-select>
     </ion-item>
-    <!--<ion-item>
+    <ion-item>
       <ion-label>{{ 'app_language' | translate }}</ion-label>
-      <ion-select [(ngModel)]="app_language" [selectOptions]="selectOptions">
+      <ion-select [(ngModel)]="appLanguage" [selectOptions]="selectOptions">
         <ion-option *ngFor="let language of languages" [value]="language.code">{{language.name}}</ion-option>
       </ion-select>
-    </ion-item>-->
+    </ion-item>
   </ion-list>
 </ion-content>

@@ -18,7 +18,14 @@ export class SettingsPage {
   speedOfSpeechOriginal: string
   selectOptions = { cssClass: 'alertDark' }
   user: User
+  appLanguage: string
+  languages = [{ "code": "cs", "name": "Czech", "nativeName": "česky, čeština" }, { "code": "en", "name": "English", "nativeName": "English" }]
   constructor(public storage: Storage, public translate: TranslateService, public date: DateProvider, public platform: Platform, public viewCtrl: ViewController, public alertCtrl: AlertController, public auth: AngularFireAuth, public db: AngularFireDatabase) {
+
+  }
+
+  ionViewDidLoad() {
+    this.appLanguage = this.translate.currentLang
     this.storage.get('speedOfSpeech').then(value => {
       if (value) {
         this.speedOfSpeech = this.speedOfSpeechOriginal = value
@@ -29,7 +36,7 @@ export class SettingsPage {
   }
 
   dismiss() {
-    if (this.speedOfSpeech == this.speedOfSpeechOriginal) {
+    if (this.speedOfSpeech == this.speedOfSpeechOriginal && this.translate.currentLang == this.appLanguage) {
       this.viewCtrl.dismiss()
     } else {
       this.alertCtrl.create({
@@ -54,6 +61,12 @@ export class SettingsPage {
   }
 
   done() {
+    // Language Change
+    if (this.appLanguage != this.translate.currentLang) {
+      this.translate.use(this.appLanguage)
+      this.translate.setDefaultLang(this.appLanguage)
+      this.storage.set('appLanguage', this.appLanguage)
+    }
     if (this.speedOfSpeechOriginal != this.speedOfSpeech)
       this.storage.set('speedOfSpeech', parseFloat(this.speedOfSpeech))
     this.viewCtrl.dismiss()

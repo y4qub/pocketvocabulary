@@ -3,7 +3,7 @@
         <ion-toolbar color="primary">
             <ion-title class="menuTitle">{{ 'languages' | translate }}</ion-title>
             <ion-buttons start>
-                <button ion-button icon-only (click)="addList()">
+                <button ion-button icon-only (click)="openAddLanguage()">
                     <ion-icon name="add" color="dark"></ion-icon>
                 </button>
             </ion-buttons>
@@ -30,7 +30,7 @@
         </div>
         <form [formGroup]="myForm">
             <ion-list radio-group *ngIf="languages" formControlName="listOptions" [(ngModel)]="selectedLanguage" no-lines>
-                <ion-item *ngFor="let language of languages" (click)="deleteLanguage(language)">
+                <ion-item *ngFor="let language of languages" (click)="openDeleteLanguage(language)">
                     <ion-label>
                         <span>{{language}}</span>
                         <ion-icon name="remove-circle" class="remove-ios" *ngIf="editMode" showWhen="ios"></ion-icon>

@@ -18,6 +18,9 @@ export class LoginPage {
   user: User
   accepted: boolean = false
   constructor(public afAuth: AngularFireAuth, public googlePlus: GooglePlus, public alert: AlertController, public storage: Storage, public viewCtrl: ViewController, public nav: NavController, public dateProvider: DateProvider, public menuCtrl: MenuController, public modalCtrl: ModalController, public platform: Platform, public navParams: NavParams, public auth: AngularFireAuth, public db: AngularFireDatabase, private fb: Facebook) {
+  }
+
+  ionViewDidLoad() {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
       if (auth) this.nav.setRoot('TabsPage').then(() => this.viewCtrl.dismiss())
@@ -103,7 +106,12 @@ export class LoginPage {
   forgotPassword() {
     this.modalCtrl.create('ForgotpasswordPage').present()
   }
-  getInitialDbObject() {
+
+  openPolicy(policyName: string) {
+    this.modalCtrl.create('PoliciesPage', { policyName: policyName }).present()
+  }
+
+  getInitialDbObject(): Object {
     return {
       info: {
         streak: 0,
@@ -112,10 +120,6 @@ export class LoginPage {
         lastActive: this.dateProvider.getToday()
       }
     }
-  }
-
-  openPolicy(policyName: string) {
-    this.modalCtrl.create('PoliciesPage', {policyName: policyName}).present()
   }
 
 }

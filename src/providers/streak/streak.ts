@@ -18,7 +18,6 @@ export class StreakProvider {
       this.user = auth
     })
   }
-
   daysInMonth(month, year) {
     return new Date(year, month, 0).getDate()
   }

@@ -18,17 +18,17 @@ import { User } from 'firebase'
   templateUrl: 'add-language.html',
 })
 export class AddLanguagePage {
-  languages = []
-  showCancel = false
+  languages: Array<string> = []
+  showCancel: boolean = false
   user: User
   constructor(public dateProvider: DateProvider, public viewCtrl: ViewController, public languageProvider: LanguageProvider, public auth: AngularFireAuth, public db: AngularFireDatabase) {
-    this.auth.authState.subscribe((auth: User) => {
-      this.user = auth
-    })
   }
 
   ionViewDidLoad() {
-    this.setItems().then((items: Array<string>) => this.languages = items)
+    this.auth.authState.subscribe((auth: User) => {
+      this.user = auth
+      this.setItems().then((items: Array<string>) => this.languages = items)
+    })
   }
 
   setItems() {

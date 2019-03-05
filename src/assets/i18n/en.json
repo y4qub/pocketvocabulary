@@ -66,5 +66,11 @@
 	"fast": "Fast",
 	"speed_of_speech": "Speed of Speech",
 	"add_some_more_words": "Add some more words",
-	"export_or_edit_my_data": "Export or Edit My Data"
+	"export_or_edit_my_data": "Export or Edit My Data",
+	"repeat_words": "Repeat Words",
+	"types": "Types",
+	"options": "Options",
+	"privacy_policy": "Privacy Policy",
+	"terms_of_service": "Terms of Service"
+
 }

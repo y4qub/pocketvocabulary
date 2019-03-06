@@ -100,7 +100,6 @@ export class PracticePage {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
-    setTimeout(() => this.timeoutWorkaround = true, 300) // workaround
   }
 
   ionViewDidEnter() {
@@ -124,7 +123,9 @@ export class PracticePage {
 
   showOptions() {
     this.options = true
-    this.input = false; this.select = false; this.yesNo = false
+    this.input = false
+    this.select = false
+    this.yesNo = false
   }
 
   toggleVisibility() {
@@ -162,40 +163,43 @@ export class PracticePage {
       this.input = false; this.select = true; this.yesNo = false
       this.generateOrder()
       this.generateWord()
-      this.generateWords()
+      this.generateSelectWords()
       // Yes/No
     } else if (num == 2) {
       this.input = false; this.select = false; this.yesNo = true
       this.generateWord()
-      console.log(this.generatedWord1)
-      this.isCorrect = true
-      // NOT CORRECT MATCH
-      if (Math.random() > 0.5) {
-        // Index Generation
-        var myIndex = Math.floor(Math.random() * this.words1.length)
-        if (this.random) {
-          while (this.words2.indexOf(this.generatedWord2) == myIndex) {
-            myIndex = Math.floor(Math.random() * this.words1.length)
-          }
-        } else {
-          while (this.words1.indexOf(this.generatedWord2) == myIndex) {
-            myIndex = Math.floor(Math.random() * this.words1.length)
-          }
+      this.generateYNword()
+    }
+  }
+
+  generateYNword() {
+    this.isCorrect = true
+    // NOT CORRECT MATCH
+    if (Math.random() > 0.5) {
+      // Index Generation
+      var myIndex = Math.floor(Math.random() * this.words1.length)
+      if (this.random) {
+        while (this.words2.indexOf(this.generatedWord2) == myIndex) {
+          myIndex = Math.floor(Math.random() * this.words1.length)
         }
-        // Setting the generatedWord1
-        if (this.practiceOptions['translation'] == 0) {
-          this.generatedWord2 = this.words2[myIndex]
-        } else if (this.practiceOptions['translation'] == 1) {
-          this.generatedWord2 = this.words1[myIndex]
-        } else if (this.practiceOptions['translation'] == 2) {
-          if (this.random) {
-            this.generatedWord2 = this.words2[myIndex]
-          } else {
-            this.generatedWord2 = this.words1[myIndex]
-          }
+      } else {
+        while (this.words1.indexOf(this.generatedWord2) == myIndex) {
+          myIndex = Math.floor(Math.random() * this.words1.length)
         }
-        this.isCorrect = false
       }
+      // Setting the generatedWord1
+      if (this.practiceOptions['translation'] == 0) {
+        this.generatedWord2 = this.words2[myIndex]
+      } else if (this.practiceOptions['translation'] == 1) {
+        this.generatedWord2 = this.words1[myIndex]
+      } else if (this.practiceOptions['translation'] == 2) {
+        if (this.random) {
+          this.generatedWord2 = this.words2[myIndex]
+        } else {
+          this.generatedWord2 = this.words1[myIndex]
+        }
+      }
+      this.isCorrect = false
     }
   }
 
@@ -328,7 +332,7 @@ export class PracticePage {
     this.translateTo = placeholder
   }
 
-  generateWords() {
+  generateSelectWords() {
     let words
     if (this.practiceOptions['translation'] == 0) {
       words = this.words2

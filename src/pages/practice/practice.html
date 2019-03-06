@@ -49,7 +49,7 @@
     <!-- INPUT -->
     <div class="container" id="input-container" *ngIf="input" [@visibility]="visibility">
       <h1>{{generatedWord1}}</h1>
-      <ion-input type="email" class="input" [(ngModel)]="answer" [placeholder]="'translate_to' | translate" #input
+      <ion-input type="email" class="input" [(ngModel)]="answer" placeholder="Translate" #input
         [@green]="greenYes" [@red]="redYes" (keyup.enter)="check()"></ion-input>
       <div id="check-wrapper">
         <button ion-button id="check-btn" icon-only round (click)="check()">

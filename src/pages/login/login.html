@@ -28,10 +28,10 @@
   <button ion-button full class="full-btn" *ngIf="!existingAccount" (click)="signUp(email, password)">{{ 'sign_up' | translate
     }}
   </button>
-  <div class="textBtn" *ngIf="!existingAccount" (click)="existingAccount = true">{{ 'i_already_have_an_account' | translate
+  <div class="text-btn" *ngIf="!existingAccount" (click)="existingAccount = true">{{ 'i_already_have_an_account' | translate
     }}
   </div>
-  <div class="textBtn" *ngIf="existingAccount" (click)="existingAccount = false">{{ 'i_dont_have_an_account_yet' | translate
+  <div class="text-btn" *ngIf="existingAccount" (click)="existingAccount = false">{{ 'i_dont_have_an_account_yet' | translate
     }}
   </div>
   <div class="text-btn" (click)="forgotPassword()">{{ 'forgot_password' | translate }}</div>

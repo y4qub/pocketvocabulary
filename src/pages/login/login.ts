@@ -9,6 +9,14 @@ import { User } from 'firebase'
 import { Storage } from '@ionic/storage'
 import { GooglePlus } from '@ionic-native/google-plus';
 
+interface defaultObj {
+  streak: number;
+  practicedWords: number;
+  wordsToPractice: number;
+  lastActive: string;
+  timezone?: string;
+}
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -17,7 +25,14 @@ import { GooglePlus } from '@ionic-native/google-plus';
 export class LoginPage {
   user: User
   accepted: boolean = false
+  defaultObj: defaultObj
   constructor(public afAuth: AngularFireAuth, public googlePlus: GooglePlus, public alert: AlertController, public storage: Storage, public viewCtrl: ViewController, public nav: NavController, public dateProvider: DateProvider, public menuCtrl: MenuController, public modalCtrl: ModalController, public platform: Platform, public navParams: NavParams, public auth: AngularFireAuth, public db: AngularFireDatabase, private fb: Facebook) {
+  this.defaultObj = {
+    streak: 0,
+    practicedWords: 0,
+    wordsToPractice: 5,
+    lastActive: this.dateProvider.getToday()
+  }
   }
 
   ionViewDidLoad() {
@@ -49,7 +64,7 @@ export class LoginPage {
       return
     }
     this.auth.auth.createUserWithEmailAndPassword(email, password).then(user => {
-      this.db.list('/users').set(user.uid, this.getInitialDbObject())
+      this.db.list('/users').set(user.uid, this.defaultObj)
       this.storage.set('speed_of_speech', 'medium')
     }).catch(err => this.showError(err.message))
   }
@@ -86,7 +101,7 @@ export class LoginPage {
         this.db.database.ref(`/users`).once('value').then(snapshot => {
           if (!snapshot) return
           if (!snapshot.val()[user.uid])
-            this.db.list('/users').set(user.uid, this.getInitialDbObject())
+            this.db.list('/users').set(user.uid, this.defaultObj)
         })
       })
     }).catch(console.error)
@@ -109,17 +124,6 @@ export class LoginPage {
 
   openPolicy(policyName: string) {
     this.modalCtrl.create('PoliciesPage', { policyName: policyName }).present()
-  }
-
-  getInitialDbObject(): Object {
-    return {
-      info: {
-        streak: 0,
-        practicedWords: 0,
-        wordsToPractice: 5,
-        lastActive: this.dateProvider.getToday()
-      }
-    }
   }
 
 }

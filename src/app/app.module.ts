@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -17,7 +17,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DateProvider } from '../providers/date/date';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { StreakProvider } from '../providers/streak/streak';
 import { Clipboard } from '@ionic-native/clipboard'
 import { FileTransfer } from '@ionic-native/file-transfer'
@@ -79,6 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Clipboard,
     FileTransfer,
     GooglePlus
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

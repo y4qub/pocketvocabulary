@@ -74,7 +74,7 @@ export class PracticePage {
   // Options
   practiceOptions = {}
   // View
-  options = false
+  options = true
   input = false
   select = false
   yesNo = false
@@ -93,23 +93,19 @@ export class PracticePage {
   greenNo = 'no'
   redYes = 'no'
   redNo = 'no'
-  random: boolean // Translation: both
+  random: boolean // translation both
   infoRef: any
   constructor(public translate: TranslateService, public date: DateProvider, public platform: Platform, public languageProvider: LanguageProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, public db: AngularFireDatabase, public auth: AngularFireAuth, public menu: MenuController, public modalCtrl: ModalController) {
-
-  }
-
-  ionViewDidLoad() {
     this.languageProvider.getLanguageName(this.translate.currentLang).then((value: string) => this.currentLanguage = value)
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
-    setTimeout(() => this.timeoutWorkaround = true, 300) // Workaround
+    setTimeout(() => this.timeoutWorkaround = true, 300) // workaround
   }
 
   ionViewDidEnter() {
     if (!this.user) return
-    //this.showOptions()
+    this.showOptions()
     // Get Language
     if (Object.keys(this.navParams.data).length) {
       this.language = this.navParams.data
@@ -345,10 +341,10 @@ export class PracticePage {
         words = this.words1
       }
     }
-    // Generate the 3 words
+    // generate the 3 words
     for (let i = 0; i < 3; i++) {
       let randomWord = words[Math.floor(Math.random() * words.length)]
-      // Make sure the words don't repeat
+      // make sure the words don't repeat
       while (this.generatedWords.indexOf(randomWord) != -1 || randomWord == this.generatedWord2)
         randomWord = words[Math.floor(Math.random() * words.length)]
       this.generatedWords.push(randomWord)

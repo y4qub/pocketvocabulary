@@ -4,7 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database'
 import { AngularFireAuth } from 'angularfire2/auth'
 import { TextInput, MenuController, ModalController, NavController, Tabs, Select, Platform, IonicPage, Toolbar } from 'ionic-angular'
 import { Storage } from '@ionic/storage'
-import { LanguageProvider } from '../../providers/language/language'
+import { BackendProvider } from '../../providers/backend/backend'
 import { DateProvider } from '../../providers/date/date'
 import { User } from 'firebase'
 import { TranslateService } from '@ngx-translate/core';
@@ -43,18 +43,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class PracticePage {
-  timeoutWorkaround = false
-  @ViewChild('input') input2: TextInput
   @ViewChild('toolbar') toolbar: Toolbar
-  @ViewChild('sectionSelect') sectionSelect: Select
+  timeoutWorkaround = false
+  practiceOptions = {}
+  user: User
   language: string
   words1: Array<string>
   words2: Array<string>
-  type = 'classic'
   currentLanguage: string
-  checking = false
-  translateTo: string
-  user: User
   selectOptions = { cssClass: 'alertDark' }
   // Word Generation
   generatedWord1: string
@@ -65,14 +61,6 @@ export class PracticePage {
   attempts = 0
   score = 0
   rating: number
-  // Time practice
-  timeout
-  paused = false
-  time: number
-  state: number
-  delay: number
-  // Options
-  practiceOptions = {}
   // View
   options = true
   input = false
@@ -87,16 +75,15 @@ export class PracticePage {
   red2 = 'no'
   red3 = 'no'
   tapped: boolean
-  // y/n
+  // Y/N
   isCorrect: boolean
   greenYes = 'no'
   greenNo = 'no'
   redYes = 'no'
   redNo = 'no'
-  random: boolean // translation both
-  infoRef: any
-  constructor(public translate: TranslateService, public date: DateProvider, public platform: Platform, public languageProvider: LanguageProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, public db: AngularFireDatabase, public auth: AngularFireAuth, public menu: MenuController, public modalCtrl: ModalController) {
-    this.languageProvider.getLanguageName(this.translate.currentLang).then((value: string) => this.currentLanguage = value)
+  random: boolean // Translation - Both
+  constructor(public translate: TranslateService, public date: DateProvider, public platform: Platform, public backendProvider: BackendProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, public db: AngularFireDatabase, public auth: AngularFireAuth, public menu: MenuController, public modalCtrl: ModalController) {
+    this.backendProvider.getLanguageName(this.translate.currentLang).then((value: string) => this.currentLanguage = value)
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
@@ -260,7 +247,7 @@ export class PracticePage {
   }
 
   reloadDatabase(cb?) {
-    this.languageProvider.fetchWords(this.language, (words1, words2) => {
+    this.backendProvider.fetchWords(this.language, (words1, words2) => {
       if (!words1 || !words2) return
       this.words1 = words1
       this.words2 = words2
@@ -304,15 +291,10 @@ export class PracticePage {
     // TRANSLATION WAY
     let words1
     let words2
-    let placeholder
     if (this.practiceOptions['translation'] == 0) {
-      this.languageProvider.getLanguageName(this.translate.currentLang).then((value: string) => {
-        placeholder = value
-      })
       words1 = this.words1
       words2 = this.words2
     } else if (this.practiceOptions['translation'] == 1) {
-      placeholder = this.language
       words1 = this.words2
       words2 = this.words1
     } else if (this.practiceOptions['translation'] == 2) {
@@ -321,7 +303,6 @@ export class PracticePage {
         words1 = this.words1
         words2 = this.words2
       } else {
-        placeholder = this.language
         words1 = this.words2
         words2 = this.words1
       }
@@ -329,7 +310,6 @@ export class PracticePage {
     if (!words1 || !words2) return
     this.generatedWord1 = words1[currentIndex]
     this.generatedWord2 = words2[currentIndex]
-    this.translateTo = placeholder
   }
 
   generateSelectWords() {
@@ -345,10 +325,10 @@ export class PracticePage {
         words = this.words1
       }
     }
-    // generate the 3 words
+    // Generate the 3 words
     for (let i = 0; i < 3; i++) {
       let randomWord = words[Math.floor(Math.random() * words.length)]
-      // make sure the words don't repeat
+      // Make sure the words don't repeat
       while (this.generatedWords.indexOf(randomWord) != -1 || randomWord == this.generatedWord2)
         randomWord = words[Math.floor(Math.random() * words.length)]
       this.generatedWords.push(randomWord)

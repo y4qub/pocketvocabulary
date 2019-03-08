@@ -3,7 +3,7 @@ import { NavParams, TextInput, IonicPage, Platform } from 'ionic-angular'
 import { ViewController } from 'ionic-angular/navigation/view-controller'
 import { AngularFireDatabase } from 'angularfire2/database'
 import { AngularFireAuth } from 'angularfire2/auth'
-import { LanguageProvider } from '../../providers/language/language'
+import { BackendProvider } from '../../providers/backend/backend'
 import { ToastController } from 'ionic-angular'
 import { User } from 'firebase'
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +23,7 @@ export class AddWordPage {
   languageCode: string
   user: User
   language: string
-  constructor(public storage: Storage, public translateService: TranslateService, public platform: Platform, private toastCtrl: ToastController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AngularFireAuth, public db: AngularFireDatabase, public languages: LanguageProvider) {
+  constructor(public storage: Storage, public translateService: TranslateService, public platform: Platform, private toastCtrl: ToastController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AngularFireAuth, public db: AngularFireDatabase, public backendProvider: BackendProvider) {
 
   }
 
@@ -32,7 +32,7 @@ export class AddWordPage {
       this.user = auth
     })
     this.language = this.navParams.get('language')
-    this.languages.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)
+    this.backendProvider.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)
   }
 
 

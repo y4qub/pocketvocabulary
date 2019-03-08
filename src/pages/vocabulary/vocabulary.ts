@@ -4,7 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database'
 import { AngularFireAuth } from 'angularfire2/auth'
 import { NavParams } from 'ionic-angular/navigation/nav-params'
 import { Storage } from '@ionic/storage'
-import { LanguageProvider } from '../../providers/language/language';
+import { BackendProvider } from '../../providers/backend/backend'
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { User } from 'firebase'
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ export class VocabularyPage {
   language: string
   speedOfSpeech: any
   user: User
-  constructor(public translate: TranslateService, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public languageProvider: LanguageProvider, public storage: Storage, public menu: MenuController, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public translate: TranslateService, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public backendProvider: BackendProvider, public storage: Storage, public menu: MenuController, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth, public navParams: NavParams, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -62,7 +62,7 @@ export class VocabularyPage {
   }
 
   reloadDatabase() {
-    this.languageProvider.fetchWords(this.language, (words1, words2) => {
+    this.backendProvider.fetchWords(this.language, (words1, words2) => {
       this.words1 = words1
       this.words2 = words2
     })

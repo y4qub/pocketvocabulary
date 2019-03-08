@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { ViewController, IonicPage } from 'ionic-angular'
 import { AngularFireDatabase } from 'angularfire2/database'
 import { AngularFireAuth } from 'angularfire2/auth'
-import { LanguageProvider } from '../../providers/language/language'
+import { BackendProvider } from '../../providers/backend/backend'
 import { DateProvider } from '../../providers/date/date'
 import { User } from 'firebase'
 
@@ -21,7 +21,7 @@ export class AddLanguagePage {
   languages: Array<string> = []
   showCancel: boolean = false
   user: User
-  constructor(public dateProvider: DateProvider, public viewCtrl: ViewController, public languageProvider: LanguageProvider, public auth: AngularFireAuth, public db: AngularFireDatabase) {
+  constructor(public dateProvider: DateProvider, public viewCtrl: ViewController, public backendProvider: BackendProvider, public auth: AngularFireAuth, public db: AngularFireDatabase) {
   }
 
   ionViewDidLoad() {
@@ -36,7 +36,7 @@ export class AddLanguagePage {
       let values: Array<string>
       this.languages = []
       // Set values to the basic language list
-      values = this.languageProvider.getLanguageNames()
+      values = this.backendProvider.getLanguageNames()
       if (!this.user) return
       // Remove all languages that are already being used
       this.db.database.ref(`users/${this.user.uid}`).once('value').then(data => {

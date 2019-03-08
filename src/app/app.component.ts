@@ -8,7 +8,7 @@ import { AngularFireDatabase } from 'angularfire2/database'
 import { ModalController } from 'ionic-angular/components/modal/modal-controller'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { Storage } from '@ionic/storage'
-import { LanguageProvider } from '../providers/language/language'
+import { BackendProvider } from '../providers/backend/backend'
 import { Globalization } from '@ionic-native/globalization'
 import { TranslateService } from '@ngx-translate/core'
 import { DateProvider } from '../providers/date/date'
@@ -27,7 +27,7 @@ export class MyApp implements OnInit {
   user: User
   defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
-  constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public language: LanguageProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
+  constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
     this.defaultUserInfo = {
       streak: 0,
       practicedWords: 0,
@@ -56,7 +56,7 @@ export class MyApp implements OnInit {
   }
 
   async redirect() {
-    await this.initUser()
+    await this.backendProvider.initUser()
     if (this.user) {
       this.generateLanguages(() => {
         this.storage.get('selectedLanguage').then((language: string) => {
@@ -135,7 +135,7 @@ export class MyApp implements OnInit {
   }
 
   generateLanguages(cb?) {
-    this.language.fetchLanguages((languages: Array<string>) => {
+    this.backendProvider.fetchLanguages((languages: Array<string>) => {
       if (languages) {
         this.languages = languages
         // Automatically choose the language if it's the only one

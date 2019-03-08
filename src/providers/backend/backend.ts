@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'firebase'
@@ -14,14 +14,10 @@ import * as languageList from  './supportedLanguages.json'
 */
 
 @Injectable()
-export class BackendProvider implements OnInit {
+export class BackendProvider {
   user: User
   defaultUserInfo: UserInfo
   constructor(public auth: AngularFireAuth, public db: AngularFireDatabase, public storage: Storage) {
-
-  }
-
-  ngOnInit() {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
@@ -31,7 +27,7 @@ export class BackendProvider implements OnInit {
   initUser() {
     return new Promise((resolve, reject) => {
       this.auth.auth.getRedirectResult().then(data => {
-        if (!data || !data.user) reject('Not Authenticated')
+        if (!data || !data.user) resolve('No redirect result') // -> Not a new user
         if (data.additionalUserInfo.isNewUser) {
           this.db.list(`/users/${data.user.uid}`).set('info', this.defaultUserInfo).then(() => resolve())
           this.storage.set('speedOfSpeech', 1.3)

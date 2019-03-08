@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../../app/app.module';
 import { HttpClient } from '@angular/common/http';
-import { LanguageProvider } from '../../providers/language/language';
 import { DataRequestPage } from './data-request';
 
 @NgModule({
@@ -15,6 +14,6 @@ import { DataRequestPage } from './data-request';
       deps: [HttpClient]
     }
   })],
-  providers: [LanguageProvider]
+  providers: []
 })
 export class DataRequestPageModule { }

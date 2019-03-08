@@ -4,7 +4,6 @@ import { SettingsPage } from './settings';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../../app/app.module';
 import { HttpClient } from '@angular/common/http';
-import { LanguageProvider } from '../../providers/language/language';
 
 @NgModule({
   declarations: [SettingsPage],
@@ -15,6 +14,6 @@ import { LanguageProvider } from '../../providers/language/language';
       deps: [HttpClient]
     }
   })],
-  providers: [LanguageProvider]
+  providers: []
 })
 export class SettingsPageModule { }

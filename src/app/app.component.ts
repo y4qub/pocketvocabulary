@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, ViewChild, OnInit } from '@angular/core'
 import { Platform, NavController, MenuController, AlertController, ActionSheetController } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -14,19 +14,29 @@ import { TranslateService } from '@ngx-translate/core'
 import { DateProvider } from '../providers/date/date'
 import { User } from 'firebase'
 import { StreakProvider } from '../providers/streak/streak'
+import { UserInfo } from '../user'
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit {
   languages: Array<string>
   editMode: boolean = false
   myForm: FormGroup
   selectedLanguage: string
   user: User
-  infoObj = { info: { streak: 0, practicedWords: 0, wordsToPractice: 5, lastActive: this.date.getToday(), timedPracticeInterval: 5 } }
+  defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
-  constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public language: LanguageProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
+  constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public language: LanguageProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
+    this.defaultUserInfo = {
+      streak: 0,
+      practicedWords: 0,
+      wordsToPractice: 5,
+      lastActive: this.date.getToday()
+    }
+  }
+
+  ngOnInit() {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
       this.redirect()
@@ -35,26 +45,18 @@ export class MyApp {
     this.myForm = this.fb.group({
       listOptions: ['']
     })
-    platform.ready().then(() => {
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if (platform.is('cordova')) {
-        statusBar.styleLightContent()
-        splashScreen.hide()
+      if (this.platform.is('cordova')) {
+        this.statusBar.styleLightContent()
+        this.splashScreen.hide()
       }
     })
   }
 
-  redirect() {
-    // For new Google and Facebook Redirect Sign-In
-    this.auth.auth.getRedirectResult().then(data => {
-      if (!data || !data.user) return
-      if (data.additionalUserInfo.isNewUser) {
-        this.db.list('/users').set(data.user.uid, this.infoObj)
-        this.storage.set('speedOfSpeech', 1.3)
-      }
-    })
-    // Redirect based on the auth state
+  async redirect() {
+    await this.initUser()
     if (this.user) {
       this.generateLanguages(() => {
         this.storage.get('selectedLanguage').then((language: string) => {
@@ -65,10 +67,7 @@ export class MyApp {
           }
         })
       })
-      // Enable rotation
-      if (this.platform.is('cordova'))
-        this.screenOrientation.unlock()
-      this.streak.checkStreak()
+      this.setRotation(true)
     } else {
       // Go to intro if haven't seen already
       this.storage.get('intro').then(value => {
@@ -79,7 +78,15 @@ export class MyApp {
         }
       })
       this.nav.setRoot('LoginPage')
-      // Disable rotation
+      this.setRotation(false)
+    }
+  }
+
+  setRotation(state: boolean) {
+    if (state) {
+      if (this.platform.is('cordova'))
+        this.screenOrientation.unlock()
+    } else {
       if (this.platform.is('cordova'))
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
     }

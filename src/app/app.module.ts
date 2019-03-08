@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -21,6 +21,7 @@ import { StreakProvider } from '../providers/streak/streak';
 import { Clipboard } from '@ionic-native/clipboard'
 import { FileTransfer } from '@ionic-native/file-transfer'
 import { GooglePlus } from '@ionic-native/google-plus'
+import { BackendProvider } from '../providers/backend/backend';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBjxUNBy7DvTlaxQtOzTahAJOX2mAj16vI",
@@ -51,9 +52,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       preloadModules: true
     }),
     AngularFireModule.initializeApp(firebaseConfig),
-    HttpModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    HttpModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -77,8 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StreakProvider,
     Clipboard,
     FileTransfer,
-    GooglePlus
-  ],
-  schemas: [NO_ERRORS_SCHEMA]
+    GooglePlus,
+    BackendProvider
+  ]
 })
 export class AppModule { }

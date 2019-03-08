@@ -8,13 +8,12 @@ import * as firebase from 'firebase/app'
 import { User } from 'firebase'
 import { Storage } from '@ionic/storage'
 import { GooglePlus } from '@ionic-native/google-plus';
+import { UserInfo } from '../../user';
 
-interface defaultObj {
-  streak: number;
-  practicedWords: number;
-  wordsToPractice: number;
-  lastActive: string;
-  timezone?: string;
+const googlePlusConfig = {
+  'webClientId': '71486533817-atjgni37o6c0fb9b848gv5vs4n12dv4v.apps.googleusercontent.com',
+  'offline': true,
+  'scopes': 'profile email'
 }
 
 @IonicPage()
@@ -25,14 +24,14 @@ interface defaultObj {
 export class LoginPage {
   user: User
   accepted: boolean = false
-  defaultObj: defaultObj
+  defaultUserInfo: UserInfo
   constructor(public afAuth: AngularFireAuth, public googlePlus: GooglePlus, public alert: AlertController, public storage: Storage, public viewCtrl: ViewController, public nav: NavController, public dateProvider: DateProvider, public menuCtrl: MenuController, public modalCtrl: ModalController, public platform: Platform, public navParams: NavParams, public auth: AngularFireAuth, public db: AngularFireDatabase, private fb: Facebook) {
-  this.defaultObj = {
-    streak: 0,
-    practicedWords: 0,
-    wordsToPractice: 5,
-    lastActive: this.dateProvider.getToday()
-  }
+    this.defaultUserInfo = {
+      streak: 0,
+      practicedWords: 0,
+      wordsToPractice: 5,
+      lastActive: this.dateProvider.getToday()
+    }
   }
 
   ionViewDidLoad() {
@@ -58,52 +57,28 @@ export class LoginPage {
   }
 
   signUp(email: string, password: string) {
+    if (!this.didAcceptPolicies()) return
     if (!email || !password) return
-    if (!this.accepted) {
-      this.showError('You must first agree with the Privacy Policy and Terms of Service of this app in order to create an account.')
-      return
-    }
     this.auth.auth.createUserWithEmailAndPassword(email, password).then(user => {
-      this.db.list('/users').set(user.uid, this.defaultObj)
+      this.db.list(`/users/${user.uid}`).set('info', this.defaultUserInfo)
       this.storage.set('speed_of_speech', 'medium')
     }).catch(err => this.showError(err.message))
   }
 
   signInWithGoogle() {
-    if (!this.accepted) {
-      this.showError('You must first agree with the Privacy Policy and Terms of Service of this app in order to create an account.')
-      return
-    }
-    if (this.platform.is('cordova')) {
-      this.googlePlus.login({
-        'webClientId': '71486533817-atjgni37o6c0fb9b848gv5vs4n12dv4v.apps.googleusercontent.com',
-        'offline': true,
-        'scopes': 'profile email'
-      }).then(gPlusUser => {
-        this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gPlusUser.idToken))
-      }).catch(console.error)
-    } else {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(provider).then(() => {
-        return firebase.auth().getRedirectResult()
-      }).catch(console.error)
-    }
+    if (!this.didAcceptPolicies()) return
+    this.googlePlus.login(googlePlusConfig).then(gPlusUser => {
+      this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gPlusUser.idToken)).then(user => {
+        this.db.list(`/users/${user.uid}`).set('info', this.defaultUserInfo)
+      })
+    }).catch(console.error)
   }
 
   signInWithFacebook() {
-    if (!this.accepted) {
-      this.showError('You must first agree with the Privacy Policy and Terms of Service of this app in order to create an account.')
-      return
-    }
+    if (!this.didAcceptPolicies()) return
     this.fb.login(['email', 'public_profile']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken)
-      firebase.auth().signInWithCredential(facebookCredential).then(user => {
-        this.db.database.ref(`/users`).once('value').then(snapshot => {
-          if (!snapshot) return
-          if (!snapshot.val()[user.uid])
-            this.db.list('/users').set(user.uid, this.defaultObj)
-        })
-      })
+      firebase.auth().signInWithCredential(facebookCredential)
     }).catch(console.error)
   }
 
@@ -116,6 +91,15 @@ export class LoginPage {
         { text: 'Close', role: 'cancel' }
       ]
     }).present()
+  }
+
+  didAcceptPolicies() {
+    if (!this.accepted) {
+      this.showError('You must first agree with the Privacy Policy and Terms of Service of this app in order to create an account.')
+      return false
+    } else {
+      this.accepted = true
+    }
   }
 
   forgotPassword() {

@@ -41,6 +41,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "angular-svg-round-progressbar": "^2.0.0",
     "angularfire2": "5.0.0-rc.6",
+    "angularfire2-offline": "^4.3.1",
     "cordova-android": "7.1.4",
     "cordova-clipboard": "^1.2.1",
     "cordova-custom-config": "^5.0.3",

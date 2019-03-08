@@ -9,7 +9,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LanguageProvider } from '../providers/language/language';
 import { ScreenOrientation } from '@ionic-native/screen-orientation'
 import { IonicStorageModule } from '@ionic/storage';
 import { Globalization } from '@ionic-native/globalization'
@@ -72,7 +71,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ScreenOrientation,
-    LanguageProvider,
     Globalization,
     DateProvider,
     StreakProvider,

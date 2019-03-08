@@ -1,20 +1,20 @@
-import { Component, ViewChild, OnInit } from '@angular/core'
-import { Platform, NavController, MenuController, AlertController, ActionSheetController } from 'ionic-angular'
-import { StatusBar } from '@ionic-native/status-bar'
-import { SplashScreen } from '@ionic-native/splash-screen'
-import { ScreenOrientation } from '@ionic-native/screen-orientation'
-import { AngularFireAuth } from "angularfire2/auth"
-import { AngularFireDatabase } from 'angularfire2/database'
-import { ModalController } from 'ionic-angular/components/modal/modal-controller'
-import { FormGroup, FormBuilder } from '@angular/forms'
-import { Storage } from '@ionic/storage'
-import { BackendProvider } from '../providers/backend/backend'
-import { Globalization } from '@ionic-native/globalization'
-import { TranslateService } from '@ngx-translate/core'
-import { DateProvider } from '../providers/date/date'
-import { User } from 'firebase'
-import { StreakProvider } from '../providers/streak/streak'
-import { UserInfo } from '../user'
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Globalization } from '@ionic-native/globalization';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase } from 'angularfire2/database';
+import { User } from 'firebase';
+import { ActionSheetController, AlertController, MenuController, NavController, Platform } from 'ionic-angular';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { BackendProvider } from '../providers/backend/backend';
+import { DateProvider } from '../providers/date/date';
+import { StreakProvider } from '../providers/streak/streak';
+import { UserInfo } from '../user';
 
 @Component({
   templateUrl: 'app.html'

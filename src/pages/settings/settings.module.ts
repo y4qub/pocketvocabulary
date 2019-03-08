@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { SettingsPage } from './settings';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../../app/app.module';
 import { HttpClient } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { IonicPageModule } from 'ionic-angular';
+import { HttpLoaderFactory } from '../../app/app.module';
+import { SettingsPage } from './settings';
 
 @NgModule({
   declarations: [SettingsPage],

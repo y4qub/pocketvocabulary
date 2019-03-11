@@ -1,0 +1,37 @@
+practice-input {
+    #check-wrapper {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        #check-text {
+            color: gray;
+            font-size: 20px;
+        }
+        #check-btn {
+            height: 60px;
+            width: 60px;
+            margin-right: 16px;
+        }
+        #check-btn-icon {
+            font-size: 37px;
+        }
+    }
+    input {
+        text-align: center;
+        padding: 0;
+    }
+    ion-input {
+        border-radius: 50px;
+        width: 80%;
+        margin: 0 auto 0 auto;
+        font-size: 1.5em;
+        background-color: rgb(32, 32, 32);
+        color: white;
+        padding: 0;
+        transition: 0.3s;
+    }
+    button.action {
+        margin-top: 1.5em;
+    }
+}

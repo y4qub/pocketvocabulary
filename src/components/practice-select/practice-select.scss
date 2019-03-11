@@ -1,0 +1,21 @@
+practice-select {
+    .grid {
+        display: grid;
+        grid-template: 143px 143px / 143px 143px;
+        grid-gap: 25px;
+        justify-content: center;
+    }
+    .item {
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+        border-radius: 20px;
+        transition: 0.3s;
+        &:active {
+            background-color: #222222 !important;
+            transition: none;
+        }
+    }
+}

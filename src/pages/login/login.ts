@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ModalController, Platform, ViewController, AlertController } from 'ionic-angular';
-import { DateProvider } from '../../providers/date/date';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Facebook } from '@ionic-native/facebook';
-import * as firebase from 'firebase/app'
-import { User } from 'firebase'
-import { Storage } from '@ionic/storage'
-import { GooglePlus } from '@ionic-native/google-plus';
-import { UserInfo } from '../../user';
+import { User } from 'firebase';
+import * as firebase from 'firebase/app';
+import { AlertController, IonicPage, MenuController, ModalController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { UserInfo } from '../../interfaces';
+import { DateProvider } from '../../providers/date/date';
 
 const googlePlusConfig = {
   'webClientId': '71486533817-atjgni37o6c0fb9b848gv5vs4n12dv4v.apps.googleusercontent.com',
@@ -30,7 +30,12 @@ export class LoginPage {
       streak: 0,
       practicedWords: 0,
       wordsToPractice: 5,
-      lastActive: this.dateProvider.getToday()
+      lastActive: this.dateProvider.getToday(),
+      practiceOptions: {
+        repeatWords: false,
+        translation: 0,
+        types: ['input', 'select', 'yesno']
+      }
     }
   }
 

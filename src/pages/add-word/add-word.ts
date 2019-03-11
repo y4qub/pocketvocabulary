@@ -1,13 +1,13 @@
-import { Component, ViewChild, AfterViewChecked } from '@angular/core'
-import { NavParams, TextInput, IonicPage, Platform } from 'ionic-angular'
-import { ViewController } from 'ionic-angular/navigation/view-controller'
-import { AngularFireDatabase } from 'angularfire2/database'
-import { AngularFireAuth } from 'angularfire2/auth'
-import { BackendProvider } from '../../providers/backend/backend'
-import { ToastController } from 'ionic-angular'
-import { User } from 'firebase'
+import { Component, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage'
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { User } from 'firebase';
+import { IonicPage, NavParams, Platform, TextInput, ToastController } from 'ionic-angular';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { BackendProvider } from '../../providers/backend/backend';
+import { LanguageProvider } from '../../providers/language/language';
 
 @IonicPage()
 @Component({
@@ -23,7 +23,7 @@ export class AddWordPage {
   languageCode: string
   user: User
   language: string
-  constructor(public storage: Storage, public translateService: TranslateService, public platform: Platform, private toastCtrl: ToastController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AngularFireAuth, public db: AngularFireDatabase, public backendProvider: BackendProvider) {
+  constructor(public storage: Storage, public translateService: TranslateService, public languageProvider: LanguageProvider, public platform: Platform, private toastCtrl: ToastController, public navParams: NavParams, public viewCtrl: ViewController, public auth: AngularFireAuth, public db: AngularFireDatabase, public backendProvider: BackendProvider) {
 
   }
 
@@ -31,8 +31,10 @@ export class AddWordPage {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
-    this.language = this.navParams.get('language')
-    this.backendProvider.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)
+    this.backendProvider.getLanguage().subscribe(language => {
+      this.language = language
+    })
+    this.languageProvider.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)
   }
 
 

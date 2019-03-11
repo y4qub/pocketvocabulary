@@ -1,0 +1,26 @@
+<div class="card" *ngIf="practiceOptions">
+  <h1>Options</h1>
+  <ion-list no-lines>
+    <ion-item>
+      <ion-label (click)="practiceOptions.repeatWords = !practiceOptions.repeatWords">Repeat Words</ion-label>
+      <ion-toggle [(ngModel)]="practiceOptions.repeatWords" color="primary"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Types</ion-label>
+      <ion-select [(ngModel)]="practiceOptions.types" multiple="true" [selectOptions]="selectOptions" placeholder="Choose">
+        <ion-option value="input">Input</ion-option>
+        <ion-option value="select">Select</ion-option>
+        <ion-option value="yesno">Yes / No</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Translation</ion-label>
+      <ion-select [(ngModel)]="practiceOptions.translation" [selectOptions]="selectOptions" placeholder="Choose">
+        <ion-option value="0">{{language}} to {{currentLanguage}}</ion-option>
+        <ion-option value="1">{{currentLanguage}} to {{language}}</ion-option>
+        <ion-option value="2">{{ 'both' | translate }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <button ion-button round (click)="start()" [disabled]="practiceOptions.types.length == 0 || (!practiceOptions.translation && practiceOptions.translation != 0)">START</button>
+</div>

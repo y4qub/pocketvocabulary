@@ -1,0 +1,10 @@
+<div>
+  <h1>{{generatedWord1}}</h1>
+  <div class="grid">
+    <div class="item" (click)="correct()" [style.order]="randomNumbers[0]" [@green]="green">{{generatedWord2}}
+    </div>
+    <div class="item" (click)="wrong(1)" [style.order]="randomNumbers[1]" [@red]="red1">{{generatedWords[0]}}</div>
+    <div class="item" (click)="wrong(2)" [style.order]="randomNumbers[2]" [@red]="red2">{{generatedWords[1]}}</div>
+    <div class="item" (click)="wrong(3)" [style.order]="randomNumbers[3]" [@red]="red3">{{generatedWords[2]}}</div>
+  </div>
+</div>

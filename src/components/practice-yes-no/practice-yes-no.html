@@ -1,0 +1,8 @@
+<div *ngIf="word1 && word2">
+  <h1>{{word1}}</h1>
+  <h2>{{word2}}</h2>
+  <div class="container">
+    <div class="circle" [@green]="greenYes" [@red]="redYes" (click)="check('yes')">YES</div>
+    <div class="circle" [@green]="greenNo" [@red]="redNo" (click)="check('no')">NO</div>
+  </div>
+</div>

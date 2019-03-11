@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { PracticePage } from './practice';
 import { HttpClient } from '@angular/common/http';
-import { HttpLoaderFactory } from '../../app/app.module';
+import { NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { IonicPageModule } from 'ionic-angular';
+import { HttpLoaderFactory } from '../../app/app.module';
+import { ComponentsModule } from '../../components/components.module';
+import { PracticePage } from './practice';
 
 @NgModule({
   declarations: [PracticePage],
@@ -13,7 +14,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
     }
-  })
-]
+  }),
+    ComponentsModule
+  ]
 })
 export class PracticePageModule { }

@@ -1,26 +1,27 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { AngularFireModule } from 'angularfire2'
-import { HttpModule } from '@angular/http';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Clipboard } from '@ionic-native/clipboard';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { Globalization } from '@ionic-native/globalization';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ScreenOrientation } from '@ionic-native/screen-orientation'
+import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
-import { Globalization } from '@ionic-native/globalization'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { DateProvider } from '../providers/date/date';
-import { StreakProvider } from '../providers/streak/streak';
-import { Clipboard } from '@ionic-native/clipboard'
-import { FileTransfer } from '@ionic-native/file-transfer'
-import { GooglePlus } from '@ionic-native/google-plus'
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { BackendProvider } from '../providers/backend/backend';
+import { DateProvider } from '../providers/date/date';
+import { LanguageProvider } from '../providers/language/language';
+import { PracticeProvider } from '../providers/practice/practice';
+import { MyApp } from './app.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBjxUNBy7DvTlaxQtOzTahAJOX2mAj16vI",
@@ -73,11 +74,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ScreenOrientation,
     Globalization,
     DateProvider,
-    StreakProvider,
     Clipboard,
     FileTransfer,
     GooglePlus,
-    BackendProvider
+    BackendProvider,
+    LanguageProvider,
+    PracticeProvider
   ]
 })
 export class AppModule { }

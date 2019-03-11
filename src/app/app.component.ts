@@ -11,10 +11,9 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'firebase';
 import { ActionSheetController, AlertController, MenuController, NavController, Platform } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { UserInfo } from '../interfaces';
 import { BackendProvider } from '../providers/backend/backend';
 import { DateProvider } from '../providers/date/date';
-import { StreakProvider } from '../providers/streak/streak';
-import { UserInfo } from '../user';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +26,7 @@ export class MyApp implements OnInit {
   user: User
   defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
-  constructor(public actionSheetCtrl: ActionSheetController, public streak: StreakProvider, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
+  constructor(public actionSheetCtrl: ActionSheetController, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
     this.defaultUserInfo = {
       streak: 0,
       practicedWords: 0,
@@ -58,99 +57,80 @@ export class MyApp implements OnInit {
   async redirect() {
     await this.backendProvider.initUser()
     if (this.user) {
-      this.generateLanguages(() => {
-        this.storage.get('selectedLanguage').then((language: string) => {
-          if (language) {
-            this.selectLanguage(language)
-          } else {
-            this.nav.setRoot('TabsPage')
-          }
-        })
-      })
+      await this.generateLanguages()
+      const language = await this.storage.get('selectedLanguage')
+      if (language) this.selectLanguage(language)
+      this.nav.setRoot('TabsPage')
       this.setRotation(true)
     } else {
-      // Go to intro if haven't seen already
-      this.storage.get('intro').then(value => {
-        if (value) {
-          this.nav.setRoot('LoginPage')
-        } else {
-          this.nav.setRoot('IntroPage')
-        }
-      })
-      this.nav.setRoot('LoginPage')
+      const intro = await this.storage.get('intro')
+      if (intro) {
+        this.nav.setRoot('LoginPage')
+      } else {
+        this.nav.setRoot('IntroPage')
+      }
       this.setRotation(false)
     }
   }
 
-  setRotation(state: boolean) {
-    if (state) {
-      if (this.platform.is('cordova'))
-        this.screenOrientation.unlock()
+  async initTranslate() {
+    this.translate.setDefaultLang('en') // Fallback
+    const appLanguage = await this.storage.get('appLanguage')
+    if (appLanguage) {
+      this.translate.use(appLanguage)
     } else {
-      if (this.platform.is('cordova'))
-        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+      if (this.translate.getBrowserLang() !== undefined) {
+        this.translate.use(this.translate.getBrowserLang())
+      } else {
+        this.translate.use('en')
+      }
     }
   }
 
-  initTranslate() {
-    this.translate.setDefaultLang('en') // Fallback
-    this.storage.get('appLanguage').then(value => {
-      if (value) {
-        this.translate.use(value)
-      } else {
-        if (this.translate.getBrowserLang() !== undefined) {
-          this.translate.use(this.translate.getBrowserLang())
-        } else {
-          this.translate.use('en')
-        }
-      }
-    })
-  }
-
-  selectLanguage(language: string, reload?: boolean) {
+  selectLanguage(language: string) {
     this.selectedLanguage = language // Visual select
-    this.nav.setRoot('TabsPage', { language: language })
+    this.backendProvider.setLanguage(language)
     this.storage.set('selectedLanguage', language)
     if (this.menuCtrl.isOpen)
       this.menuCtrl.close()
   }
 
-  restoreLastLanguage() {
-    this.storage.get('selectedLanguage').then((language: string) => {
-      if (language && this.languages.indexOf(language) != -1)
-        this.selectLanguage(language, true)
-    })
+  async restoreLastLanguage() {
+    const selectedLanguage = await this.storage.get('selectedLanguage')
+    if (selectedLanguage && this.languages.indexOf(selectedLanguage) != -1)
+      this.selectLanguage(selectedLanguage)
   }
 
-  openAddLanguage() {
+  async openAddLanguage() {
     const modal = this.modalCtrl.create('AddLanguagePage')
     modal.present()
     // Select the new added language
     modal.onDidDismiss(language => {
       if (language)
-        this.generateLanguages(() => {
+        this.generateLanguages().then(() => {
           this.selectLanguage(language)
         })
     })
   }
 
-  generateLanguages(cb?) {
-    this.backendProvider.fetchLanguages((languages: Array<string>) => {
-      if (languages) {
-        this.languages = languages
-        // Automatically choose the language if it's the only one
-        if (languages.length == 1) this.selectLanguage(languages[0])
-        if (cb) cb()
-      } else {
-        this.languages = []
-        this.openAddLanguage()
-      }
+  async generateLanguages() {
+    return new Promise((resolve, reject) => {
+      this.backendProvider.fetchLanguages().then((languages: Array<string>) => {
+        if (languages) {
+          this.languages = languages
+          // Automatically choose the language if it's the only one
+          if (languages.length == 1) this.selectLanguage(languages[0])
+        } else {
+          this.languages = []
+          this.openAddLanguage()
+        }
+        resolve()
+      }).catch(reject)
     })
   }
 
   openDeleteLanguage(language: string) {
     if (!this.editMode || this.menuCtrl.isAnimating()) return
-    // Prompt for deleting the language
     this.alertCtrl.create({
       title: `${this.translate.instant('do_you_really_want_to_delete')} ${language}?`,
       cssClass: 'alertDark',
@@ -177,10 +157,23 @@ export class MyApp implements OnInit {
     })
   }
 
-  switchEditMode() {
+  async switchEditMode() {
     this.editMode = !this.editMode
-    if (!this.editMode) this.generateLanguages(() => this.restoreLastLanguage())
+    if (!this.editMode) {
+      await this.generateLanguages()
+      this.restoreLastLanguage()
+    }
     this.myForm.controls.listOptions.reset()
+  }
+
+  setRotation(state: boolean) {
+    if (state) {
+      if (this.platform.is('cordova'))
+        this.screenOrientation.unlock()
+    } else {
+      if (this.platform.is('cordova'))
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+    }
   }
 
 }

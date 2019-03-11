@@ -1,0 +1,11 @@
+<div *ngIf="word">
+  <h1>{{word}}</h1>
+  <ion-input type="email" class="input" [(ngModel)]="answer" placeholder="Translate" [@color]="color" (keyup.enter)="check()"
+    #input></ion-input>
+  <div id="check-wrapper">
+    <button ion-button id="check-btn" icon-only round (click)="check()">
+      <ion-icon name="md-arrow-forward" id="check-btn-icon"></ion-icon>
+    </button>
+    <div id="check-text">or hit return</div>
+  </div>
+</div>

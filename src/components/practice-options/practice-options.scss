@@ -1,0 +1,47 @@
+practice-options {
+    .card {
+        position: relative;
+        background-color: #323232;
+        width: 90%;
+        max-width: 500px;
+        height: 285px;
+        margin: auto;
+        border-radius: 25px;
+        padding: 4px 21px;
+        h1 {
+            text-align: left;
+            font-size: 2.2em;
+            margin-bottom: 0.4em;
+        }
+        button {
+            width: 91%;
+            height: 48px;
+            border-radius: 15px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translate(-50%);
+        }
+    }
+    ion-item {
+        background-color: #323232 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    ion-toggle {
+        padding-right: 0px !important;
+    }
+    div.item-inner {
+        padding: 0 !important;
+    }
+    div.select-icon {
+        height: inherit !important;
+    }
+    ion-select {
+        margin-right: -3px;
+        max-width: 80%;
+    }
+    ion-label {
+        color: rgb(202, 202, 202) !important;
+    }
+}

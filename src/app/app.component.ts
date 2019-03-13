@@ -14,6 +14,7 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { UserInfo } from '../interfaces';
 import { BackendProvider } from '../providers/backend/backend';
 import { DateProvider } from '../providers/date/date';
+import { LanguageProvider } from '../providers/language/language';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,13 +27,7 @@ export class MyApp implements OnInit {
   user: User
   defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
-  constructor(public actionSheetCtrl: ActionSheetController, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
-    this.defaultUserInfo = {
-      streak: 0,
-      practicedWords: 0,
-      wordsToPractice: 5,
-      lastActive: this.date.getToday()
-    }
+  constructor(public languageProvider: LanguageProvider, public actionSheetCtrl: ActionSheetController, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -89,7 +84,7 @@ export class MyApp implements OnInit {
 
   selectLanguage(language: string) {
     this.selectedLanguage = language // Visual select
-    this.backendProvider.setLanguage(language)
+    this.languageProvider.setLanguage(language)
     this.storage.set('selectedLanguage', language)
     if (this.menuCtrl.isOpen)
       this.menuCtrl.close()

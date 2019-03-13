@@ -15,8 +15,10 @@
 </ion-header>
 
 <ion-content no-bounce>
-  <practice-options *ngIf="showOptions" (start)="start($event)"></practice-options>
-  <practice-yes-no *ngIf="showYesNo"></practice-yes-no>
-  <practice-select *ngIf="showSelect"></practice-select>
-  <practice-input *ngIf="showInput" (result)="proceedResult($event)"></practice-input>
+  <div id="wrapper">
+    <practice-options *ngIf="showOptions" (start)="start($event)"></practice-options>
+    <practice-yes-no *ngIf="showYesNo"></practice-yes-no>
+    <practice-select *ngIf="showSelect"></practice-select>
+    <practice-input *ngIf="showInput" (result)="proceedResult($event)"></practice-input>
+  </div>
 </ion-content>

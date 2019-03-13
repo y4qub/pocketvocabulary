@@ -31,7 +31,7 @@ export class AddWordPage {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
-    this.backendProvider.getLanguage().subscribe(language => {
+    this.languageProvider.getLanguage().subscribe(language => {
       this.language = language
     })
     this.languageProvider.getLanguageCode(this.language).then((languageCode: string) => this.languageCode = languageCode)

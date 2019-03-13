@@ -19,7 +19,7 @@ export class PracticeOptionsComponent implements OnInit {
 
   constructor(public storage: Storage, public backendProvider: BackendProvider, public languageProvider: LanguageProvider, public practiceProvider: PracticeProvider) {
     this.onStart = new EventEmitter()
-    this.backendProvider.getLanguage().subscribe(language => this.language = language)
+    this.languageProvider.getLanguage().subscribe(language => this.language = language)
     this.setCurrentLanguage()
   }
 

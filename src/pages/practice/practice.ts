@@ -89,6 +89,7 @@ export class PracticePage {
   }
 
   proceedResult(correct: boolean) {
+    console.log(correct)
     this.nextExercise()
   }
 

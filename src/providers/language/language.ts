@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as languageList from './supportedLanguages.json';
 
 @Injectable()
 export class LanguageProvider {
+  private language: BehaviorSubject<string>
+
+  constructor() {
+    this.language = new BehaviorSubject<string>(null)
+  }
+
+  setLanguage(language: string) {
+    this.language.next(language)
+  }
+
+  getLanguage() {
+    return this.language.asObservable()
+  }
 
   getLanguageList() {
     return languageList

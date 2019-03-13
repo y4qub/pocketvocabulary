@@ -6,6 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'firebase';
 import { IonicPage, MenuController, ModalController } from 'ionic-angular';
 import { BackendProvider } from '../../providers/backend/backend';
+import { LanguageProvider } from '../../providers/language/language';
 
 @IonicPage()
 @Component({
@@ -17,13 +18,13 @@ export class VocabularyPage {
   words2: Array<string>
   language: string
   user: User
-  constructor(public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public backendProvider: BackendProvider, public storage: Storage, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth) {
+  constructor(public languageProvider: LanguageProvider, public menuCtrl: MenuController, public textToSpeech: TextToSpeech, public backendProvider: BackendProvider, public storage: Storage, public modalCtrl: ModalController, public db: AngularFireDatabase, public auth: AngularFireAuth) {
   }
 
   async ionViewDidLoad() {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
-      this.backendProvider.getLanguage().subscribe(language => {
+      this.languageProvider.getLanguage().subscribe(language => {
         this.language = language
         this.reloadDatabase()
       })
@@ -55,7 +56,7 @@ export class VocabularyPage {
   }
 
   async reloadDatabase() {
-    const words = await this.backendProvider.fetchWords(this.language)
+    const words = await this.backendProvider.fetchVocabulary()
     this.words1 = words.words1
     this.words2 = words.words2
   }

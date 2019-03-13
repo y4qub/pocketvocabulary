@@ -3,22 +3,22 @@ import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from 'firebase';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserInfo, Words } from '../../interfaces';
 import { DateProvider } from '../date/date';
+import { LanguageProvider } from '../language/language';
 
 @Injectable()
 export class BackendProvider {
 
   private user: User
-  private language: BehaviorSubject<string>
+  private language: string
   private defaultUserInfo: UserInfo
 
-  constructor(private dateProvider: DateProvider, private auth: AngularFireAuth, private db: AngularFireDatabase, private storage: Storage) {
+  constructor(private dateProvider: DateProvider, private auth: AngularFireAuth, private db: AngularFireDatabase, private storage: Storage, private languageProvider: LanguageProvider) {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
     })
-    this.language = new BehaviorSubject<string>(null)
+    this.languageProvider.getLanguage().subscribe(language => this.language = language)
     this.defaultUserInfo = {
       streak: 0,
       practicedWords: 0,
@@ -32,27 +32,11 @@ export class BackendProvider {
     }
   }
 
-  setLanguage(language: string) {
-    this.language.next(language)
-  }
-
-  getLanguage() {
-    return this.language.asObservable()
-  }
-
-  fetchVocabulary() {
-    return new Promise((resolve, reject) => {
-      this.db.database.ref(`users/${this.user.uid}/languages/${this.language.getValue()}`).once('value').then(snapshot => {
-        resolve(snapshot.val()['vocabulary'])
-      }).catch(reject)
-    })
-  }
-
-  fetchWords(language: string): Promise<Words> {
+  fetchVocabulary(): Promise<Words> {
     return new Promise((resolve, reject) => {
       let words1 = null
       let words2 = null
-      this.db.database.ref(`users/${this.user.uid}/languages/${language}`).once('value').then(snapshot => {
+      this.db.database.ref(`users/${this.user.uid}/languages/${this.language}`).once('value').then(snapshot => {
         const value = snapshot.val()
         // Check if the selected language has vocabulary
         if (value && Object.keys(value).indexOf('vocabulary') != -1) {

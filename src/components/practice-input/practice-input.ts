@@ -32,7 +32,7 @@ export class PracticeInputComponent implements OnInit {
   }
 
   async check() {
-    this.result.emit(await this.practiceProvider.matches(this.word, this.answer))
+    this.result.emit(await this.practiceProvider.matches(this.answer))
   }
 
 }

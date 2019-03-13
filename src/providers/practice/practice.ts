@@ -6,6 +6,7 @@ import { BackendProvider } from '../backend/backend';
 @Injectable()
 export class PracticeProvider {
 
+  private word2: string
 
   private practiceOptions: PracticeOptions = {
     repeatWords: false,
@@ -13,10 +14,8 @@ export class PracticeProvider {
     translation: 0
   }
   private generatedIndexes: Array<number> = []
-  private language: string
 
   constructor(private backendProvider: BackendProvider, private storage: Storage) {
-    this.backendProvider.getLanguage().subscribe(language => this.language = language)
   }
 
   getPracticeOptions() {
@@ -27,16 +26,21 @@ export class PracticeProvider {
     this.storage.set('practiceOptions', practiceOptions)
   }
 
-  async matches(word: string, answer: string) {
+  async matches(answer: string) {
     const words = await this.assignWords()
-    if (words.words2.includes(answer) && words.words2.indexOf(answer) == words.words1.indexOf(word))
+    // if(options.normalizeInput)
+    const answerNormalized = answer.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const wordNormalized = this.word2.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    if (answerNormalized == wordNormalized) {
       return true
+    }
     return false
   }
 
   async generateWord(): Promise<string> {
     const generatedWords = await this.assignWords()
     const index = this.generateIndex(generatedWords.words1)
+    this.word2 = generatedWords.words2[index]
     return generatedWords.words1[index]
   }
 
@@ -62,7 +66,7 @@ export class PracticeProvider {
 
   // Set words according to the translation way
   private async assignWords(): Promise<Words> {
-    const words = await this.backendProvider.fetchWords(this.language)
+    const words = await this.backendProvider.fetchVocabulary()
     const wordsPrimary = { words1: words.words1, words2: words.words2 }
     const wordsSecondary = { words1: words.words2, words2: words.words1 }
     let newWords: Words

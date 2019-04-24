@@ -5,6 +5,7 @@ practice-yes-no {
         margin-bottom: 1em;
     }
     .container {
+        margin-top: 3em;
         display: flex;
         grid-gap: 25px;
         justify-content: space-around;
@@ -18,11 +19,11 @@ practice-yes-no {
         border-radius: 50%;
         width: 140px;
         height: 140px;
-        transition: 0.5s;
-        &:active {
-            background-color: #222222 !important;
-            transition: none;
-        }
+        transition: 0.3s;
+        // &:active {
+        //     background-color: #222222 !important;
+        //     transition: none;
+        // }
     }
     .correct {
         background-color: green;

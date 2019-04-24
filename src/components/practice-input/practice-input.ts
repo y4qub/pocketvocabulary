@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output, state, style, trigger } from '@angular/core';
-import { BackendProvider } from '../../providers/backend/backend';
 import { PracticeProvider } from '../../providers/practice/practice';
 
 @Component({
@@ -23,7 +22,7 @@ export class PracticeInputComponent implements OnInit {
   word: string
   @Output('result') result: EventEmitter<boolean>
 
-  constructor(public practiceProvider: PracticeProvider, public backendProvider: BackendProvider) {
+  constructor(public practiceProvider: PracticeProvider) {
     this.result = new EventEmitter
   }
 
@@ -32,7 +31,15 @@ export class PracticeInputComponent implements OnInit {
   }
 
   async check() {
+
+    if (await this.practiceProvider.matches(this.answer)) {
+      this.color = 'green'
+    } else {
+      this.color = 'red'
+    }
+
     this.result.emit(await this.practiceProvider.matches(this.answer))
+
   }
 
 }

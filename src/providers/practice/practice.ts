@@ -10,8 +10,9 @@ export class PracticeProvider {
 
   private practiceOptions: PracticeOptions = {
     repeatWords: false,
-    types: ['input'],
-    translation: 0
+    translation: 0,
+    types: ['yesno']
+
   }
   private generatedIndexes: Array<number> = []
 
@@ -26,14 +27,17 @@ export class PracticeProvider {
     this.storage.set('practiceOptions', practiceOptions)
   }
 
+  getSecondWord() {
+    return this.word2
+  }
+
   async matches(answer: string) {
-    const words = await this.assignWords()
     // if(options.normalizeInput)
+    if (!answer) return
     const answerNormalized = answer.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     const wordNormalized = this.word2.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    if (answerNormalized == wordNormalized) {
+    if (answerNormalized == wordNormalized)
       return true
-    }
     return false
   }
 

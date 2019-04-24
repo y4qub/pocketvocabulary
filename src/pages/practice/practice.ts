@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,18 +13,7 @@ import { LanguageProvider } from '../../providers/language/language';
 @IonicPage()
 @Component({
   selector: 'page-practice',
-  templateUrl: 'practice.html',
-  animations: [
-    trigger('visibility', [
-      state('visible', style({
-        opacity: 1
-      })),
-      state('invisible', style({
-        opacity: 0
-      })),
-      transition('visible <=> invisible', animate('.3s')),
-    ])
-  ]
+  templateUrl: 'practice.html'
 })
 export class PracticePage {
 
@@ -42,41 +30,44 @@ export class PracticePage {
   }
 
   ionViewDidEnter() {
+
     this.switchView('options')
+
   }
 
   start(practiceOptions: PracticeOptions) {
+
     this.practiceOptions = practiceOptions
     this.nextExercise()
+
   }
 
   nextExercise() {
     const randomIndex = Math.floor(Math.random() * this.practiceOptions.types.length)
-    if (this.practiceOptions.types[randomIndex] == 'input') {
-      this.switchView(this.practiceOptions.types[randomIndex])
-    } else if (this.practiceOptions.types[randomIndex] == 'select') {
-      this.switchView(this.practiceOptions.types[randomIndex])
-    } else if (this.practiceOptions.types[randomIndex] == 'yesno') {
-      this.switchView(this.practiceOptions.types[randomIndex])
+    // TODO spravit, takhle to nebude fungovat spravne
+
+    switch (this.practiceOptions.types[randomIndex]) {
+
+      case 'input':
+
+        this.switchView(this.practiceOptions.types[randomIndex])
+        break
+
+      case 'select':
+
+        this.switchView(this.practiceOptions.types[randomIndex])
+        break
+
+      case 'yesno':
+
+        this.switchView(this.practiceOptions.types[randomIndex])
+        break
+
     }
-    // FIX TODO
-    // let optionsArray = Object.values(this.practiceOptions.types)
-    // while (true) {
-    //   const randomIndex = Math.floor(Math.random() * optionsArray.length)
-    //   if (randomIndex == 0 && optionsArray[randomIndex]) {
-    //     this.switchView('input')
-    //     break
-    //   } else if (randomIndex == 1 && optionsArray[randomIndex]) {
-    //     this.switchView('select')
-    //     break
-    //   } else if (randomIndex == 2 && optionsArray[randomIndex]) {
-    //     this.switchView('yesno')
-    //     break
-    //   }
-    // }
   }
 
   switchView(type: string) {
+
     if (type == 'input') {
       this.showInput = true; this.showSelect = false; this.showYesNo = false; this.showOptions = false;
     } else if (type == 'select') {
@@ -86,11 +77,17 @@ export class PracticePage {
     } else if (type == 'options') {
       this.showInput = false; this.showSelect = false; this.showYesNo = false; this.showOptions = true;
     }
+
   }
 
   proceedResult(correct: boolean) {
-    console.log(correct)
-    this.nextExercise()
+
+    // TODO tohle je workaround, pridat prechod
+    setTimeout(() => {
+      this.showInput = false; this.showSelect = false; this.showYesNo = false; this.showOptions = false;
+      setTimeout(() => this.nextExercise())
+    }, 400)
+
   }
 
 }

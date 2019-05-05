@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -26,6 +26,8 @@ export class PracticePage {
   showSelect = false
   showYesNo = false
 
+  leave: boolean
+
   constructor(public translate: TranslateService, public date: DateProvider, public platform: Platform, public languageProvider: LanguageProvider, public storage: Storage, public navCtrl: NavController, public navParams: NavParams, public db: AngularFireDatabase, public auth: AngularFireAuth, public menu: MenuController, public modalCtrl: ModalController) {
   }
 
@@ -33,6 +35,10 @@ export class PracticePage {
 
     this.switchView('options')
 
+  }
+
+  ionViewDidLeave() {
+    this.leave = true
   }
 
   start(practiceOptions: PracticeOptions) {

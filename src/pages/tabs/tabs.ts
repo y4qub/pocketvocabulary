@@ -6,6 +6,7 @@ import { IonicPage } from 'ionic-angular';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
+  
   vocabularyPage = 'VocabularyPage'
   practicePage = 'PracticePage'
   profilePage = 'ProfilePage'

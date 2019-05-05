@@ -6,6 +6,7 @@ import { User } from 'firebase';
 import { UserInfo, Words } from '../../interfaces';
 import { DateProvider } from '../date/date';
 import { LanguageProvider } from '../language/language';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class BackendProvider {
@@ -33,6 +34,7 @@ export class BackendProvider {
   }
 
   fetchVocabulary(): Promise<Words> {
+    if (!this.user) return
     return new Promise((resolve, reject) => {
       let words1 = null
       let words2 = null
@@ -53,6 +55,7 @@ export class BackendProvider {
   }
 
   fetchLanguages(): Promise<Array<string>> {
+    if (!this.user) return
     return new Promise((resolve, reject) => {
       let languages: Array<string>
       this.db.database.ref(`users/${this.user.uid}`).once('value').then(snapshot => {
@@ -66,6 +69,7 @@ export class BackendProvider {
 
   // For new Google and Facebook Redirect Sign Up
   initUser() {
+    if (!this.user) return
     return new Promise((resolve, reject) => {
       this.auth.auth.getRedirectResult().then(data => {
         if (!data || !data.user) resolve('No redirect result') // Not a new user
@@ -75,6 +79,11 @@ export class BackendProvider {
         }
       }).catch(reject)
     })
+  }
+
+  getAppLanguage() {
+    if (!this.user) return
+    return this.db.object(`users/${this.user.uid}/info/appLanguage`).valueChanges()
   }
 
 }

@@ -41,8 +41,6 @@ export class PracticeSelectComponent {
       this.generatedWord2 = this.practiceProvider.getSecondWord()
     })
 
-    console.log(this.generatedWord2)
-
   }
 
   correct() {
@@ -93,8 +91,12 @@ export class PracticeSelectComponent {
   }
 
   async generateWords() {
-
-    const words = (await this.backendProvider.fetchVocabulary()).words1
+    let words: Array<string>
+    if (this.practiceProvider.getPracticeOptions().translation == 0) {
+      words = (await this.backendProvider.fetchVocabulary()).words1
+    } else {
+      words = (await this.backendProvider.fetchVocabulary()).words2
+    }
 
     for (let i = 0; i < 3; i++) {
 

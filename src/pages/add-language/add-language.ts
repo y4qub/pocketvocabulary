@@ -32,12 +32,12 @@ export class AddLanguagePage {
   }
 
   setItems() {
+    if (!this.user) return
     return new Promise((resolve, reject) => {
       let values: Array<string>
       this.languages = []
       // Set values to the basic language list
       values = this.languageProvider.getLanguageNames()
-      if (!this.user) return
       // Remove all languages that are already being used
       this.db.database.ref(`users/${this.user.uid}`).once('value').then(data => {
         const snapshot = data.val()

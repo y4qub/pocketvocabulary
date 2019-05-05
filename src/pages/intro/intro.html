@@ -1,21 +1,28 @@
 <ion-content no-bounce>
+
   <h2 class="navBtn" (click)="openLoginPage()" *ngIf="activeSlideId == 2">Start</h2>
   <h2 class="navBtn" (click)="openLoginPage()" *ngIf="activeSlideId != 2">Skip</h2>
+
   <ion-slides pager padding (ionSlideDidChange)="onTabChange($event)">
+
     <ion-slide padding>
       <img src="./assets/imgs/ios-list.svg">
       <h2 ion-text color="primary">Save what you want</h2>
       <h4>Custom vocabulary lists finally allow you to save the words you want to know.</h4>
     </ion-slide>
+
     <ion-slide padding>
       <img src="./assets/imgs/ios-checkmark-outline.svg">
       <h2 ion-text color="primary" class="title">Practice efficiently</h2>
       <h4>You'll be more examined from words difficult to remember for you.</h4>
     </ion-slide>
+
     <ion-slide padding>
       <img src="./assets/imgs/ios-airplane.svg">
       <h2 ion-text color="primary">Learn on the go</h2>
       <h4>Learn offline. Everything will be synced once you go back online.</h4>
     </ion-slide>
+
   </ion-slides>
+  
 </ion-content>

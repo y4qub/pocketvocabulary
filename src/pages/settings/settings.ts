@@ -65,7 +65,11 @@ export class SettingsPage {
     if (this.appLanguage != this.translate.currentLang) {
       this.translate.use(this.appLanguage)
       this.translate.setDefaultLang(this.appLanguage)
-      this.storage.set('appLanguage', this.appLanguage)
+      //this.storage.set('appLanguage', this.appLanguage)
+      this.auth.authState.subscribe(user => {
+        if (!user) return
+        this.db.object(`users/${user.uid}/info`).update({appLanguage: this.appLanguage})
+      })
     }
     if (this.speedOfSpeechOriginal != this.speedOfSpeech)
       this.storage.set('speedOfSpeech', parseFloat(this.speedOfSpeech))

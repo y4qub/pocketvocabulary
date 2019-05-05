@@ -1,29 +1,27 @@
 <ion-header>
+
   <ion-navbar>
+
     <ion-title>{{'settings' | translate}}</ion-title>
+
     <ion-buttons start>
       <button ion-button color="primary" (click)="dismiss()">{{ 'cancel' | translate }}</button>
     </ion-buttons>
+
     <ion-buttons end>
       <button ion-button color="primary" (click)="done()">
         <b>{{ 'done' | translate }}</b>
       </button>
     </ion-buttons>
+
   </ion-navbar>
+
 </ion-header>
 
 <ion-content>
+
   <ion-list no-lines>
-    <!--<ion-item>
-      <ion-label>{{ 'daily_goal' | translate }}</ion-label>
-      <ion-select [(ngModel)]="wordsToPractice" [selectOptions]="selectOptions">
-        <ion-option value="5">5 {{ 'words' | translate }}</ion-option>
-        <ion-option value="10">10 {{ 'words' | translate }}</ion-option>
-        <ion-option value="20">20 {{ 'words' | translate }}</ion-option>
-        <ion-option value="30">30 {{ 'words' | translate }}</ion-option>
-        <ion-option value="50">50 {{ 'words' | translate }}</ion-option>
-      </ion-select>
-    </ion-item>-->
+
     <ion-item>
       <ion-label>{{ 'speed_of_speech' | translate }}</ion-label>
       <ion-select [(ngModel)]="speedOfSpeech" [selectOptions]="selectOptions">
@@ -32,11 +30,14 @@
         <ion-option value=1.6>{{ 'fast' | translate }}</ion-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
       <ion-label>{{ 'app_language' | translate }}</ion-label>
       <ion-select [(ngModel)]="appLanguage" [selectOptions]="selectOptions">
         <ion-option *ngFor="let language of languages" [value]="language.code">{{language.name}}</ion-option>
       </ion-select>
     </ion-item>
+
   </ion-list>
+
 </ion-content>

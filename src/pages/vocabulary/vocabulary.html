@@ -1,27 +1,38 @@
 <ion-header>
+
     <ion-navbar>
+
       <ion-title>{{ 'vocabulary' | translate }}</ion-title>
+
       <ion-buttons left>
         <button ion-button icon-only menuToggle>
           <ion-icon name="globe" color="primary"></ion-icon>
         </button>
       </ion-buttons>
+      
       <ion-buttons end>
         <button ion-button icon-only (click)="openAddWord()" *ngIf="language">
           <ion-icon name="add" color="primary"></ion-icon>
         </button>
       </ion-buttons>
+
     </ion-navbar>
+
   </ion-header>
   
   <ion-content (click)="contentTouch()">
+
     <h4 ion-text class="note" *ngIf="words1 === null">{{'tap_to_add_words' | translate}}</h4>
+
     <div class="spinner" *ngIf="words1 === undefined">
       <ion-spinner name="crescent" showWhen="android"></ion-spinner>
       <ion-spinner name="ios" showWhen="ios"></ion-spinner>
     </div>
+
     <ion-list *ngIf="words1" no-lines>
+
       <ion-item-sliding *ngFor="let word of words1; let i = index" #slidingItem>
+
         <ion-item *ngIf="i % 2 == 0" style="background-color: rgb(19, 19, 19);">
           <ion-label>{{word}}</ion-label>
           <ion-note item-end>{{words2[i]}}</ion-note>
@@ -29,6 +40,7 @@
             <ion-icon name="volume-up" color="gray"></ion-icon>
           </ion-avatar>
         </ion-item>
+
         <ion-item *ngIf="i % 2 == 1" style="background-color: #0D0D0D;">
           <ion-label>{{word}}</ion-label>
           <ion-note item-end>{{words2[i]}}</ion-note>
@@ -36,11 +48,15 @@
             <ion-icon name="volume-up" color="gray"></ion-icon>
           </ion-avatar>
         </ion-item>
+
         <ion-item-options side="right">
           <button ion-button icon-only (click)="deleteWord(word)" color="danger" class="sliding">
             <ion-icon name="trash"></ion-icon>
           </button>
         </ion-item-options>
+
       </ion-item-sliding>
+
     </ion-list>
+
   </ion-content>

@@ -1,10 +1,16 @@
 <div *ngIf="generatedWords.length > 0">
+
   <h1>{{generatedWord1}}</h1>
+
   <div class="grid">
+
     <div class="item" (click)="correct()" [style.order]="randomNumbers[0]" [@color]="color">{{generatedWord2}}
     </div>
+
     <div class="item" (click)="wrong(1)" [style.order]="randomNumbers[1]" [@color]="color1">{{generatedWords[0]}}</div>
     <div class="item" (click)="wrong(2)" [style.order]="randomNumbers[2]" [@color]="color2">{{generatedWords[1]}}</div>
     <div class="item" (click)="wrong(3)" [style.order]="randomNumbers[3]" [@color]="color3">{{generatedWords[2]}}</div>
+    
   </div>
+
 </div>

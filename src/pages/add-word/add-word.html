@@ -1,31 +1,47 @@
 <ion-header>
+
   <ion-navbar>
+
     <ion-title>{{'add_word' | translate}}</ion-title>
+
     <ion-buttons start>
       <button ion-button (click)="viewCtrl.dismiss()" color="primary">{{'cancel' | translate}}</button>
     </ion-buttons>
+
     <ion-buttons end>
       <button ion-button (click)="addWord()" color="primary" [disabled]="!this.word || !this.translation">
         <b>{{'done' | translate}}</b>
       </button>
     </ion-buttons>
+
   </ion-navbar>
+
 </ion-header>
 
 <ion-content no-bounce>
+
   <ion-list no-lines>
+
     <ion-item>
-      <ion-input [placeholder]="'Word' + ' (' + language + ')'" [(ngModel)]="word" #wordInput clearInput autocapitalize="none"></ion-input>
-      <button ion-button icon-only clear item-right *ngIf="translation && !(word && translation)" (click)="autoTranslate('word')">
+      <ion-input [placeholder]="'Word' + ' (' + language + ')'" [(ngModel)]="word" #wordInput clearInput
+        autocapitalize="none"></ion-input>
+      <button ion-button icon-only clear item-right *ngIf="translation && !(word && translation)"
+        (click)="autoTranslate('word')">
         <ion-icon name="sync" class="auto-translate-icon"></ion-icon>
       </button>
     </ion-item>
+
     <ion-item>
-      <ion-input [placeholder]="'Translation' + ' (' + 'English' + ')'" [(ngModel)]="translation" clearInput autocapitalize="none"></ion-input>
-      <button ion-button icon-only clear item-right *ngIf="word && !(word && translation)" (click)="autoTranslate('translation')">
+      <ion-input [placeholder]="'Translation' + ' (' + 'English' + ')'" [(ngModel)]="translation" clearInput
+        autocapitalize="none"></ion-input>
+      <button ion-button icon-only clear item-right *ngIf="word && !(word && translation)"
+        (click)="autoTranslate('translation')">
         <ion-icon name="sync" class="auto-translate-icon"></ion-icon>
       </button>
     </ion-item>
+
   </ion-list>
+
   <img src="./assets/imgs/white-regular@3x.png" class="googleTranslateIcon" alt="Powered by Google Translate">
+
 </ion-content>

@@ -1,24 +1,34 @@
 <ion-header>
+
   <ion-navbar>
+
     <ion-title>{{ 'practice' | translate }}</ion-title>
+
     <ion-buttons left>
       <button ion-button icon-only menuToggle>
         <ion-icon name="globe" color="primary"></ion-icon>
       </button>
     </ion-buttons>
+
     <ion-buttons right>
       <button ion-button color="primary" (click)="switchView('options')">
         Reset
       </button>
     </ion-buttons>
+
   </ion-navbar>
+
 </ion-header>
 
 <ion-content no-bounce>
+
   <div id="wrapper">
+
     <practice-options *ngIf="showOptions" (start)="start($event)"></practice-options>
     <practice-yes-no *ngIf="showYesNo" (result)="proceedResult($event)"></practice-yes-no>
     <practice-select *ngIf="showSelect" (result)="proceedResult($event)"></practice-select>
     <practice-input *ngIf="showInput" (result)="proceedResult($event)"></practice-input>
+    
   </div>
+
 </ion-content>

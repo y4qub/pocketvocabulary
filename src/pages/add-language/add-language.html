@@ -1,17 +1,31 @@
 <ion-header>
+
   <ion-navbar>
+
     <ion-title>{{'add_language' | translate}}</ion-title>
+
     <ion-buttons start>
-      <button ion-button color="primary" (click)="viewCtrl.dismiss()" *ngIf="showCancel">{{'cancel' | translate}}</button>
+      <button ion-button color="primary" (click)="viewCtrl.dismiss()"
+        *ngIf="showCancel">{{'cancel' | translate}}</button>
     </ion-buttons>
+
   </ion-navbar>
+
   <ion-toolbar color="dark">
-    <ion-searchbar (ionInput)="filterItems($event)" showCancelButton="true" animated="true" [placeholder]="'search' | translate"></ion-searchbar>
+
+    <ion-searchbar (ionInput)="filterItems($event)" showCancelButton="true" animated="true"
+      [placeholder]="'search' | translate"></ion-searchbar>
+
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+
   <ion-list>
+
     <ion-item *ngFor="let language of languages" (click)="addLanguage(language)">{{language}}</ion-item>
+
   </ion-list>
+
 </ion-content>

@@ -20,6 +20,7 @@ import { LanguageProvider } from '../providers/language/language';
   templateUrl: 'app.html'
 })
 export class MyApp implements OnInit {
+
   languages: Array<string>
   editMode: boolean = false
   myForm: FormGroup
@@ -27,6 +28,7 @@ export class MyApp implements OnInit {
   user: User
   defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
+  
   constructor(public languageProvider: LanguageProvider, public actionSheetCtrl: ActionSheetController, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
   }
 

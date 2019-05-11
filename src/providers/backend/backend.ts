@@ -67,6 +67,19 @@ export class BackendProvider {
     })
   }
 
+  fetchLists(language: string) {
+
+    if (!this.user) return
+    return new Promise((resolve, reject) => {
+      let languages: Array<string>
+      this.db.database.ref(`users/${this.user.uid}/languages/${language}/lists`).once('value').then(snapshot => {
+        // Check if the selected user has any lanaguages
+        resolve(snapshot.val())
+      }).catch(reject)
+    })
+
+  }
+
   // For new Google and Facebook Redirect Sign Up
   initUser() {
     if (!this.user) return

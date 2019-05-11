@@ -17,7 +17,8 @@
                     <span ion-text color="dark">{{ 'edit' | translate }}</span>
                 </button>
 
-                <button showWhen="android" icon-only ion-button (click)="switchEditMode()" *ngIf="!editMode && languages">
+                <button showWhen="android" icon-only ion-button (click)="switchEditMode()"
+                    *ngIf="!editMode && languages">
                     <ion-icon name="create" color="dark"></ion-icon>
                 </button>
 
@@ -41,7 +42,10 @@
 
         <form [formGroup]="myForm">
 
-            <ion-list radio-group *ngIf="languages" formControlName="listOptions" [(ngModel)]="selectedLanguage" no-lines>
+            <ion-list radio-group *ngIf="languages" formControlName="listOptions" [(ngModel)]="selectedLanguage"
+                no-lines>
+
+                <!-- <ion-list-header>DUTCH</ion-list-header>
 
                 <ion-item *ngFor="let language of languages" (click)="openDeleteLanguage(language)">
 
@@ -53,7 +57,32 @@
 
                     <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language"></ion-radio>
 
-                </ion-item>
+                </ion-item> -->
+
+
+
+                <ng-container *ngFor="let language of languagesObj">
+
+                    <ion-list-header class="list-header">{{language}}</ion-list-header>
+
+                    <ion-item (click)="openDeleteLanguage(language)">
+
+                        <ion-label>
+                            <span>hjkjh</span>
+                            <ion-icon name="remove-circle" class="remove-ios" *ngIf="editMode" showWhen="ios">
+                            </ion-icon>
+                            <ion-icon name="trash" class="remove-android" *ngIf="editMode" showWhen="android">
+                            </ion-icon>
+                        </ion-label>
+
+                        <ion-radio *ngIf="!editMode" (ionSelect)="selectLanguage(language)" [value]="language">
+                        </ion-radio>
+
+                    </ion-item>
+
+                </ng-container>
+
+
 
             </ion-list>
 

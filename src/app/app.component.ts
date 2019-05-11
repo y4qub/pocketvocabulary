@@ -28,7 +28,9 @@ export class MyApp implements OnInit {
   user: User
   defaultUserInfo: UserInfo
   @ViewChild('nav') nav: NavController
-  
+
+  languagesObj = []
+
   constructor(public languageProvider: LanguageProvider, public actionSheetCtrl: ActionSheetController, public date: DateProvider, public translate: TranslateService, public globalization: Globalization, public backendProvider: BackendProvider, public storage: Storage, public screenOrientation: ScreenOrientation, public modalCtrl: ModalController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, public db: AngularFireDatabase, public menuCtrl: MenuController, private alertCtrl: AlertController, private fb: FormBuilder) {
   }
 
@@ -36,6 +38,9 @@ export class MyApp implements OnInit {
     this.auth.authState.subscribe((auth: User) => {
       this.user = auth
       this.redirect()
+
+      this.backendProvider.fetchLists('Dutch').then(data => console.log(data))
+
     })
     this.initTranslate()
     this.myForm = this.fb.group({

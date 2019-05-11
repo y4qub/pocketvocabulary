@@ -60,9 +60,11 @@ ion-content {
 // Dark Theme
 .alertDark {
     color: white;
+
     .alert-checkbox-label {
         color: white !important;
     }
+
     .alert-checkbox-icon {
         border-color: white !important;
     }
@@ -71,6 +73,11 @@ ion-content {
 .item-ios,
 .item-md {
     background-color: rgb(21, 21, 21);
+}
+
+.list-header {
+    color: gray;
+    text-align: left;
 }
 
 // Web
